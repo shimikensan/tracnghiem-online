@@ -1,0 +1,6 @@
+{
+  "name": "Hệ Thống Thi Trắc Nghiệm Trực Tuyến",
+  "description": "Ứng dụng thi trắc nghiệm nghiệp vụ chuyên nghiệp, tích hợp Firebase Firestore lưu trữ kết quả thi tự động.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
