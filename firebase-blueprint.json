@@ -1,0 +1,102 @@
+{
+  "entities": {
+    "ExamResult": {
+      "title": "ExamResult",
+      "description": "Kết quả bài thi trắc nghiệm của thí sinh",
+      "type": "object",
+      "properties": {
+        "fullName": {
+          "type": "string",
+          "description": "Họ và tên thí sinh"
+        },
+        "rank": {
+          "type": "string",
+          "description": "Cấp hàm hoặc cấp bậc"
+        },
+        "position": {
+          "type": "string",
+          "description": "Chức vụ công tác"
+        },
+        "unit": {
+          "type": "string",
+          "description": "Đơn vị công tác"
+        },
+        "score": {
+          "type": "number",
+          "description": "Điểm số thang điểm 10"
+        },
+        "score100": {
+          "type": "number",
+          "description": "Điểm số thang điểm 100"
+        },
+        "correctCount": {
+          "type": "number",
+          "description": "Số câu trả lời đúng"
+        },
+        "wrongCount": {
+          "type": "number",
+          "description": "Số câu trả lời sai"
+        },
+        "unansweredCount": {
+          "type": "number",
+          "description": "Số câu chưa làm"
+        },
+        "totalQuestions": {
+          "type": "number",
+          "description": "Tổng số câu hỏi"
+        },
+        "percentage": {
+          "type": "number",
+          "description": "Tỷ lệ phần trăm đúng"
+        },
+        "timeSpentSeconds": {
+          "type": "number",
+          "description": "Thời gian làm bài tính bằng giây"
+        },
+        "isPassed": {
+          "type": "boolean",
+          "description": "Đạt yêu cầu hay không"
+        }
+      },
+      "required": ["fullName", "rank", "position", "unit", "score", "correctCount", "totalQuestions"]
+    },
+    "ExamQuestion": {
+      "title": "ExamQuestion",
+      "description": "Câu hỏi trắc nghiệm chuyên ngành",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "description": "Số thứ tự câu hỏi"
+        },
+        "question": {
+          "type": "string",
+          "description": "Nội dung câu hỏi"
+        },
+        "options": {
+          "type": "array",
+          "description": "Danh sách các lựa chọn"
+        },
+        "correctAnswer": {
+          "type": "string",
+          "description": "Đáp án đúng"
+        },
+        "explanation": {
+          "type": "string",
+          "description": "Lời giải thích"
+        }
+      },
+      "required": ["id", "question", "options", "correctAnswer"]
+    }
+  },
+  "firestore": {
+    "/exam_results/{resultId}": {
+      "schema": "ExamResult",
+      "description": "Bản ghi kết quả bài thi của thí sinh"
+    },
+    "/exam_questions/{questionId}": {
+      "schema": "ExamQuestion",
+      "description": "Ngân hàng câu hỏi trắc nghiệm"
+    }
+  }
+}

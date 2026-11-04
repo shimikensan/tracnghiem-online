@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Cho phép lưu trữ và đọc kết quả thi
+    match /exam_results/{resultId} {
+      allow read, create: if true;
+      allow update, delete: if true;
+    }
+
+    // Cho phép đọc và quản lý ngân hàng câu hỏi
+    match /exam_questions/{questionId} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

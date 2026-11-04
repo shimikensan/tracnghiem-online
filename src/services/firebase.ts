@@ -33,12 +33,28 @@ export const defaultFirebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || "",
 };
 
+import appletConfig from '../../firebase-applet-config.json';
+
 // Khóa lưu trữ cấu hình và bộ nhớ đệm nội bộ
 const STORAGE_KEY_CONFIG = 'uav_custom_firebase_config';
 const STORAGE_KEY_LOCAL_RESULTS = 'uav_exam_local_results';
 const STORAGE_KEY_LOCAL_QUESTIONS = 'uav_exam_local_questions';
 
 export function getActiveFirebaseConfig() {
+  // 1. Ưu tiên cấu hình tự động từ firebase-applet-config.json (đã được cấp quyền)
+  if (appletConfig && appletConfig.projectId && appletConfig.projectId !== 'remixed-project-id') {
+    return {
+      apiKey: appletConfig.apiKey || "",
+      authDomain: appletConfig.authDomain || `${appletConfig.projectId}.firebaseapp.com`,
+      projectId: appletConfig.projectId || "",
+      storageBucket: appletConfig.storageBucket || `${appletConfig.projectId}.firebasestorage.app`,
+      messagingSenderId: appletConfig.messagingSenderId || "",
+      appId: appletConfig.appId || "",
+      firestoreDatabaseId: appletConfig.firestoreDatabaseId || "(default)"
+    };
+  }
+
+  // 2. Tiếp theo kiểm tra cấu hình tùy chỉnh do người dùng nhập trong modal
   const saved = localStorage.getItem(STORAGE_KEY_CONFIG);
   if (saved) {
     try {
@@ -50,6 +66,8 @@ export function getActiveFirebaseConfig() {
       // fallback
     }
   }
+
+  // 3. Fallback sang biến môi trường
   return defaultFirebaseConfig;
 }
 
@@ -65,7 +83,7 @@ export function clearCustomFirebaseConfig() {
 
 export function isFirebaseConfigured(): boolean {
   const cfg = getActiveFirebaseConfig();
-  return Boolean(cfg.projectId && cfg.projectId.trim() !== "" && cfg.apiKey && cfg.apiKey.trim() !== "");
+  return Boolean(cfg.projectId && cfg.projectId.trim() !== "" && cfg.projectId !== "remixed-project-id" && cfg.apiKey && cfg.apiKey.trim() !== "");
 }
 
 // Khởi tạo Firebase an toàn (không gây crash nếu config trống)
@@ -76,20 +94,32 @@ export function getFirebaseDb(): Firestore | null {
   if (dbInstance) return dbInstance;
   
   const config = getActiveFirebaseConfig();
-  if (!config.projectId || config.projectId.trim() === '') {
+  if (!config.projectId || config.projectId.trim() === '' || config.projectId === 'remixed-project-id') {
     return null;
   }
 
   try {
     if (getApps().length === 0) {
-      appInstance = initializeApp(config);
+      appInstance = initializeApp({
+        apiKey: config.apiKey,
+        authDomain: config.authDomain,
+        projectId: config.projectId,
+        storageBucket: config.storageBucket,
+        messagingSenderId: config.messagingSenderId,
+        appId: config.appId
+      });
     } else {
       appInstance = getApp();
     }
-    dbInstance = getFirestore(appInstance);
+
+    if (config.firestoreDatabaseId && config.firestoreDatabaseId !== '(default)') {
+      dbInstance = getFirestore(appInstance, config.firestoreDatabaseId);
+    } else {
+      dbInstance = getFirestore(appInstance);
+    }
     return dbInstance;
   } catch (error) {
-    console.warn('Lỗi khởi tạo Firebase:', error);
+    console.warn('Lỗi khởi tạo Firebase Firestore:', error);
     return null;
   }
 }
@@ -288,12 +318,12 @@ function deleteQuestionFromLocalStorage(questionId?: number, firestoreId?: strin
  * ========================================================================================= */
 
 /**
- * Lưu kết quả bài thi vào collection `exam_results`
+ * Lưu kết quả bài thi vào collection `exam_results` của Firebase Firestore
  */
 export async function saveExamResultToFirestore(
   result: ExamResultRecord
 ): Promise<{ success: boolean; id?: string; mode: 'firestore' | 'local'; error?: string }> {
-  // Luôn lưu bản sao vào localStorage để bảo toàn dữ liệu
+  // Luôn lưu bản sao vào localStorage để bảo toàn dữ liệu phòng hờ mất mạng
   saveResultToLocalStorage(result);
 
   const db = getFirebaseDb();
@@ -301,35 +331,48 @@ export async function saveExamResultToFirestore(
     return {
       success: true,
       mode: 'local',
-      error: 'Chưa điền Firebase Config. Dữ liệu đã lưu tạm thời ở bộ nhớ trình duyệt.'
+      error: 'Chưa kết nối được Firebase Firestore. Dữ liệu đã lưu tạm thời ở bộ nhớ trình duyệt.'
     };
   }
 
   try {
+    // Chuẩn hóa và lọc sạch các giá trị undefined tránh lỗi của Firestore SDK
     const docData: Record<string, any> = {
-      fullName: result.fullName,
-      rank: result.rank,
-      position: result.position,
-      unit: result.unit,
-      score: result.score,
-      score100: result.score100,
-      correctCount: result.correctCount,
-      wrongCount: result.wrongCount,
-      unansweredCount: result.unansweredCount,
-      totalQuestions: result.totalQuestions,
-      percentage: result.percentage,
-      timeSpentSeconds: result.timeSpentSeconds,
+      fullName: (result.fullName || 'Khuyết danh').trim(),
+      rank: result.rank || 'N/A',
+      position: result.position || 'N/A',
+      unit: (result.unit || 'N/A').trim(),
+      score: Number(result.score) || 0,
+      score100: Number(result.score100) || 0,
+      correctCount: Number(result.correctCount) || 0,
+      wrongCount: Number(result.wrongCount) || 0,
+      unansweredCount: Number(result.unansweredCount) || 0,
+      totalQuestions: Number(result.totalQuestions) || 0,
+      percentage: Number(result.percentage) || 0,
+      timeSpentSeconds: Number(result.timeSpentSeconds) || 0,
       submittedAt: serverTimestamp(),
       clientSubmittedAt: new Date().toISOString(),
-      isPassed: result.isPassed
+      isPassed: Boolean(result.isPassed)
     };
 
+    if (result.answersSummary) {
+      docData.answersSummary = result.answersSummary;
+    }
+
     if (result.answersDetail) {
-      docData.answersDetail = result.answersDetail;
+      const sanitizedDetail: Record<string, { selected: string | null; correct: string; isCorrect: boolean }> = {};
+      Object.entries(result.answersDetail).forEach(([k, v]) => {
+        sanitizedDetail[String(k)] = {
+          selected: v.selected !== undefined ? v.selected : null,
+          correct: v.correct || '',
+          isCorrect: Boolean(v.isCorrect)
+        };
+      });
+      docData.answersDetail = sanitizedDetail;
     }
 
     const docRef = await addDoc(collection(db, 'exam_results'), docData);
-    console.log('✅ Đã lưu kết quả vào Firestore thành công! Document ID:', docRef.id);
+    console.log('✅ Đã lưu kết quả bài thi vào Firestore `exam_results` thành công! Document ID:', docRef.id);
     
     return {
       success: true,
@@ -341,7 +384,7 @@ export async function saveExamResultToFirestore(
     return {
       success: false,
       mode: 'local',
-      error: error?.message || 'Không thể kết nối đến Firestore. Dữ liệu đã lưu tạm ở máy khách.'
+      error: error?.message || 'Không thể ghi vào Firestore. Dữ liệu đã lưu an toàn ở bộ nhớ máy khách.'
     };
   }
 }
@@ -364,14 +407,23 @@ function saveResultToLocalStorage(result: ExamResultRecord) {
 }
 
 /**
- * Tải lịch sử kết quả bài thi từ Firestore hoặc Local
+ * Tải lịch sử kết quả bài thi từ Firestore (`exam_results`) hoặc Local
  */
 export async function getExamResultsHistory(): Promise<{ results: ExamResultRecord[]; source: 'firestore' | 'local' }> {
   const db = getFirebaseDb();
   if (db) {
     try {
-      const q = query(collection(db, 'exam_results'), orderBy('submittedAt', 'desc'), limit(100));
-      const querySnapshot = await getDocs(q);
+      let querySnapshot;
+      try {
+        const q = query(collection(db, 'exam_results'), orderBy('submittedAt', 'desc'), limit(100));
+        querySnapshot = await getDocs(q);
+      } catch (orderErr) {
+        // Fallback nếu chưa kịp có index hoặc trường submittedAt đang pending
+        console.warn('Truy vấn có sắp xếp thất bại, fallback sang truy vấn thường:', orderErr);
+        const fallbackQ = query(collection(db, 'exam_results'), limit(100));
+        querySnapshot = await getDocs(fallbackQ);
+      }
+
       const items: ExamResultRecord[] = [];
       querySnapshot.forEach((docSnap) => {
         const data = docSnap.data();
@@ -398,9 +450,12 @@ export async function getExamResultsHistory(): Promise<{ results: ExamResultReco
           timeSpentSeconds: data.timeSpentSeconds ?? 0,
           submittedAt: dateStr,
           isPassed: data.isPassed ?? false,
-          answersDetail: data.answersDetail || undefined
+          answersDetail: data.answersDetail || undefined,
+          answersSummary: data.answersSummary || undefined
         });
       });
+
+      // Sắp xếp theo ngày giảm dần nếu cần
       return { results: items, source: 'firestore' };
     } catch (e) {
       console.warn('Không tải được lịch sử từ Firestore, chuyển sang bộ nhớ cục bộ:', e);
