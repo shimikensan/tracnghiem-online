@@ -6,7 +6,8 @@ import {
   AlertTriangle, 
   Send, 
   User, 
-  Flag
+  Flag,
+  CheckCircle2
 } from 'lucide-react';
 
 interface Props {
@@ -132,23 +133,10 @@ export const QuizScreen: React.FC<Props> = ({
             </div>
           </div>
 
-          {/* Đồng hồ đếm ngược và Tiến độ */}
-          <div className="flex items-center gap-4 sm:gap-6">
-            {/* Tiến độ */}
-            <div className="text-right hidden sm:block">
-              <div className="text-xs text-slate-400">
-                Tiến độ: <span className="text-white font-bold">{answeredCount}/{totalCount} câu</span>
-              </div>
-              <div className="w-28 h-2 bg-slate-800 rounded-full mt-1 overflow-hidden border border-slate-700">
-                <div 
-                  className="h-full bg-gradient-to-r from-indigo-500 to-sky-400 rounded-full transition-all duration-300"
-                  style={{ width: `${progressPercentage}%` }}
-                />
-              </div>
-            </div>
-
+          {/* Đồng hồ đếm ngược và Nút nộp bài */}
+          <div className="flex items-center gap-3 sm:gap-4">
             {/* Đồng hồ đếm ngược */}
-            <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-all ${
+            <div className={`flex items-center gap-2 px-3.5 py-2 rounded-xl border transition-all ${
               isCriticalTime 
                 ? 'bg-rose-950/60 border-rose-600 text-rose-300 animate-pulse shadow-lg shadow-rose-900/30'
                 : isLowTime
@@ -158,9 +146,9 @@ export const QuizScreen: React.FC<Props> = ({
               <Clock className={`w-4 h-4 ${isCriticalTime ? 'text-rose-400 animate-spin' : isLowTime ? 'text-amber-400' : 'text-sky-400'}`} />
               <div>
                 <span className="text-[10px] block leading-none text-slate-400 uppercase tracking-wider font-semibold">
-                  Thời gian còn lại
+                  Thời gian
                 </span>
-                <span className="font-mono text-lg sm:text-xl font-bold tracking-wider">
+                <span className="font-mono text-base sm:text-lg font-bold tracking-wider">
                   {formatTime(timeLeft)}
                 </span>
               </div>
@@ -174,6 +162,47 @@ export const QuizScreen: React.FC<Props> = ({
               <Send className="w-4 h-4" />
               <span>Nộp bài</span>
             </button>
+          </div>
+        </div>
+
+        {/* Thanh tiến trình hoàn thành bài thi (Progress Bar) */}
+        <div className="mt-4 pt-3.5 border-t border-slate-800/80">
+          <div className="flex items-center justify-between text-xs mb-2">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-white flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                Tiến độ làm bài:
+              </span>
+              <span className="font-bold text-sky-300 font-mono text-sm">
+                {answeredCount}/{totalCount} câu
+              </span>
+              <span className="px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono font-bold text-[11px]">
+                {progressPercentage}%
+              </span>
+            </div>
+
+            <div className="flex items-center gap-3 text-[11px] font-medium">
+              <span className="text-emerald-400 flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
+                Đã hoàn thành: {answeredCount}
+              </span>
+              <span className="text-slate-500 hidden sm:inline">•</span>
+              <span className="text-amber-400 flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-amber-400 inline-block" />
+                Chưa làm: {unansweredCount}
+              </span>
+            </div>
+          </div>
+
+          {/* Thanh chạy tiến trình có hiệu ứng gradient và chuyển động mượt mà */}
+          <div className="w-full h-3 bg-slate-950/80 rounded-full overflow-hidden border border-slate-700/80 p-0.5 relative shadow-inner">
+            <div 
+              className="h-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 rounded-full transition-all duration-500 ease-out shadow-md shadow-sky-500/40 relative overflow-hidden"
+              style={{ width: `${Math.max(progressPercentage, answeredCount > 0 ? 3 : 0)}%` }}
+            >
+              {/* Hiệu ứng vệt sáng quét nhẹ qua thanh tiến trình */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-pulse" />
+            </div>
           </div>
         </div>
       </div>
@@ -298,12 +327,26 @@ export const QuizScreen: React.FC<Props> = ({
         {/* Right Sticky Question Navigator (Bảng Điều Hướng Câu Hỏi) */}
         <div className="lg:col-span-4 sticky top-40 space-y-4">
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl">
-            <h4 className="text-sm font-bold text-white mb-3 flex items-center justify-between">
+            <h4 className="text-sm font-bold text-white mb-2.5 flex items-center justify-between">
               <span>Bảng Điều Hướng Câu Hỏi</span>
-              <span className="text-xs text-indigo-400 font-mono font-normal">
-                {answeredCount}/{totalCount}
+              <span className="text-xs text-sky-400 font-mono font-bold bg-sky-950/60 px-2 py-0.5 rounded-full border border-sky-800/60">
+                {answeredCount}/{totalCount} ({progressPercentage}%)
               </span>
             </h4>
+
+            {/* Thanh tiến trình nhỏ trong bảng điều hướng */}
+            <div className="mb-3.5 bg-slate-800/60 p-2.5 rounded-xl border border-slate-700/60">
+              <div className="flex items-center justify-between text-[11px] mb-1 font-medium">
+                <span className="text-slate-400">Tiến độ câu hỏi:</span>
+                <span className="text-emerald-400 font-bold font-mono">{progressPercentage}%</span>
+              </div>
+              <div className="w-full h-2 bg-slate-950 rounded-full overflow-hidden border border-slate-700">
+                <div 
+                  className="h-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 rounded-full transition-all duration-300"
+                  style={{ width: `${progressPercentage}%` }}
+                />
+              </div>
+            </div>
 
             {/* Legend */}
             <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-400 pb-3 mb-3 border-b border-slate-800">

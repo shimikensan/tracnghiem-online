@@ -146,7 +146,7 @@ export const WelcomeScreen: React.FC<Props> = ({
                 value={fullName}
                 onBlur={() => setTouched(prev => ({ ...prev, fullName: true }))}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="Ví dụ: Nguyễn Văn Hoàng"
+                placeholder="Ví dụ: Nguyễn Văn Biên"
                 className={`w-full px-4 py-2.5 bg-slate-800/90 border rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none transition ${
                   touched.fullName && fullName.trim().length < 2
                     ? 'border-rose-500/80 focus:border-rose-500'
