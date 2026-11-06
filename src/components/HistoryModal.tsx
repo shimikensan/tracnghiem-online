@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getExamResultsHistory } from '../services/firebase';
 import { ExamResultRecord } from '../types/quiz';
-import { X, Award, RefreshCw, Database } from 'lucide-react';
+import { X, Award, RefreshCw } from 'lucide-react';
 
 interface Props {
   isOpen: boolean;
@@ -44,15 +44,9 @@ export const HistoryModal: React.FC<Props> = ({ isOpen, onClose }) => {
               <Award className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                <h3 className="text-base sm:text-lg font-bold text-white truncate">
-                  Bảng Kết Quả Thi Trắc Nghiệm
-                </h3>
-                <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1 shrink-0">
-                  <Database className="w-3 h-3 text-indigo-400" />
-                  {source === 'firestore' ? 'Nguồn: Firestore (`exam_results`)' : 'Bộ nhớ trình duyệt'}
-                </span>
-              </div>
+              <h3 className="text-base sm:text-lg font-bold text-white truncate">
+                Bảng Kết Quả Thi Trắc Nghiệm
+              </h3>
               <p className="text-[11px] sm:text-xs text-slate-400 truncate">
                 Danh sách bài thi của các cán bộ, học viên đã hoàn thành và lưu trữ
               </p>

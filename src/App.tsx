@@ -231,8 +231,6 @@ export default function App() {
               <LayoutDashboard className="w-3.5 h-3.5" />
               <span>{screen === 'admin' ? 'Màn hình làm bài' : 'Trang quản trị (Admin)'}</span>
             </button>
-            <span>•</span>
-            <span className="text-slate-500">Bảo mật &amp; Lưu trữ dữ liệu trực tuyến</span>
           </div>
         </div>
       </footer>

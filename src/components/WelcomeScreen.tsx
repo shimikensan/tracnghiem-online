@@ -432,18 +432,6 @@ export const WelcomeScreen: React.FC<Props> = ({
             </div>
           </div>
 
-          {/* Security & System Info Notice */}
-          <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-start gap-3">
-            <ShieldAlert className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-            <div className="text-xs">
-              <p className="font-semibold text-slate-200">
-                Hệ Thống Sát Hạch Trực Tuyến Đã Kích Hoạt
-              </p>
-              <p className="text-slate-400 text-[11px] mt-0.5 leading-relaxed">
-                Toàn bộ dữ liệu bài làm và điểm số được mã hóa và lưu trữ tự động trên hệ thống máy chủ an toàn phục vụ công tác đánh giá.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
