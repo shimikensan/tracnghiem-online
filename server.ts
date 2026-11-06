@@ -26,7 +26,7 @@ app.use(express.json());
 import chatHandler from './api/chat';
 
 // Endpoint Chatbot AI Hỏi/Đáp phục vụ người học
-app.all(['/api/chat', '/api/chat/'], (req, res) => chatHandler(req, res));
+app.all(['/api/chat', '/api/chat/*'], (req, res) => chatHandler(req, res));
 
 async function startServer() {
   if (process.env.NODE_ENV === 'production') {
