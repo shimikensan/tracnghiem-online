@@ -11,7 +11,6 @@ import {
   Eye, 
   EyeOff, 
   FileCheck, 
-  AlertCircle,
   HelpCircle,
   Sparkles,
   Volume2,
@@ -243,45 +242,6 @@ export const ResultScreen: React.FC<Props> = ({
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12 animate-fade-in">
-      {/* Firebase Save Status Notification Badge */}
-      <div className="mb-6">
-        {saveStatus.loading ? (
-          <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 shadow-sm">
-            <div className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
-            <span>Đang ghi nhận kết quả vào cơ sở dữ liệu Firebase Firestore...</span>
-          </div>
-        ) : saveStatus.mode === 'firestore' && saveStatus.success ? (
-          <div className="flex items-center justify-between p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-800/50 text-xs text-emerald-200 shadow-sm">
-            <div className="flex items-center gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>
-                <strong>Đã lưu thành công vào Firestore:</strong> Bộ sưu tập <code className="bg-emerald-900/60 px-1 py-0.5 rounded font-mono">exam_results</code> (Mã: {saveStatus.docId?.slice(0, 8)}...)
-              </span>
-            </div>
-            <button 
-              onClick={onOpenHistoryModal}
-              className="text-emerald-300 hover:text-white underline underline-offset-2 shrink-0 font-medium"
-            >
-              Xem danh sách
-            </button>
-          </div>
-        ) : (
-          <div className="flex items-center justify-between p-3.5 rounded-xl bg-amber-950/40 border border-amber-800/50 text-xs text-amber-200 shadow-sm">
-            <div className="flex items-center gap-2.5">
-              <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>
-                <strong>Chế độ lưu nội bộ:</strong> {saveStatus.error || 'Dữ liệu đã lưu tạm an toàn trong LocalStorage.'}
-              </span>
-            </div>
-            <button 
-              onClick={onOpenHistoryModal}
-              className="text-amber-300 hover:text-white underline underline-offset-2 shrink-0 font-medium"
-            >
-              Xem bảng điểm
-            </button>
-          </div>
-        )}
-      </div>
 
       {/* Main Result Card */}
       <div className="bg-slate-900/95 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden text-center">
