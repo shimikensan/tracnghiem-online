@@ -779,16 +779,16 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
                 <table className="w-full text-left text-xs text-slate-300">
                   <thead className="bg-slate-800/90 text-slate-400 font-semibold uppercase tracking-wider border-b border-slate-800">
                     <tr>
-                      <th className="px-4 py-3.5">Họ và Tên</th>
-                      <th className="px-4 py-3.5">Cấp hàm</th>
-                      <th className="px-4 py-3.5">Chức vụ</th>
-                      <th className="px-4 py-3.5">Đơn vị công tác</th>
-                      <th className="px-4 py-3.5 text-center">Điểm số</th>
-                      <th className="px-4 py-3.5 text-center">Đúng/Tổng</th>
-                      <th className="px-4 py-3.5 text-center">Thời gian</th>
-                      <th className="px-4 py-3.5 text-center">Đánh giá</th>
-                      <th className="px-4 py-3.5 text-right">Ngày nộp</th>
-                      <th className="px-4 py-3.5 text-center">Thao tác</th>
+                      <th className="px-3 sm:px-4 py-3.5">Họ và Tên</th>
+                      <th className="hidden md:table-cell px-4 py-3.5">Cấp hàm</th>
+                      <th className="hidden md:table-cell px-4 py-3.5">Chức vụ</th>
+                      <th className="px-3 sm:px-4 py-3.5">Đơn vị</th>
+                      <th className="px-3 sm:px-4 py-3.5 text-center">Điểm số</th>
+                      <th className="hidden md:table-cell px-4 py-3.5 text-center">Đúng/Tổng</th>
+                      <th className="hidden lg:table-cell px-4 py-3.5 text-center">Thời gian</th>
+                      <th className="hidden lg:table-cell px-4 py-3.5 text-center">Đánh giá</th>
+                      <th className="hidden sm:table-cell px-4 py-3.5 text-right">Ngày nộp</th>
+                      <th className="px-2 sm:px-4 py-3.5 text-center">Thao tác</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-800/60">
@@ -796,19 +796,21 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
                       const isPass = (r.score ?? 0) >= 7;
                       return (
                         <tr key={r.id || idx} className="hover:bg-slate-800/40 transition">
-                          <td className="px-4 py-3.5 font-bold text-white flex items-center gap-2">
-                            <div className={`w-2 h-2 rounded-full ${isPass ? 'bg-emerald-400' : 'bg-rose-400'}`} />
-                            {r.fullName}
+                          <td className="px-3 sm:px-4 py-3.5 font-bold text-white">
+                            <div className="flex items-center gap-2">
+                              <div className={`w-2 h-2 rounded-full shrink-0 ${isPass ? 'bg-emerald-400' : 'bg-rose-400'}`} />
+                              <span className="whitespace-nowrap">{r.fullName}</span>
+                            </div>
                           </td>
-                          <td className="px-4 py-3.5">
+                          <td className="hidden md:table-cell px-4 py-3.5 whitespace-nowrap">
                             <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-amber-300 font-medium text-[11px]">
                               {r.rank}
                             </span>
                           </td>
-                          <td className="px-4 py-3.5 text-slate-300">{r.position}</td>
-                          <td className="px-4 py-3.5 text-sky-300 font-medium">{r.unit || 'N/A'}</td>
-                          <td className="px-4 py-3.5 text-center">
-                            <span className={`font-mono font-bold text-sm px-2.5 py-0.5 rounded ${
+                          <td className="hidden md:table-cell px-4 py-3.5 text-slate-300 whitespace-nowrap">{r.position}</td>
+                          <td className="px-3 sm:px-4 py-3.5 text-sky-300 font-medium whitespace-nowrap">{r.unit || 'N/A'}</td>
+                          <td className="px-3 sm:px-4 py-3.5 text-center">
+                            <span className={`font-mono font-bold text-xs sm:text-sm px-2.5 py-0.5 rounded ${
                               isPass 
                                 ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' 
                                 : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
@@ -816,20 +818,20 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
                               {typeof r.score === 'number' ? r.score.toFixed(1) : r.score}/10
                             </span>
                           </td>
-                          <td className="px-4 py-3.5 text-center font-mono">
+                          <td className="hidden md:table-cell px-4 py-3.5 text-center font-mono">
                             {r.correctCount}/{r.totalQuestions}
                           </td>
-                          <td className="px-4 py-3.5 text-center font-mono text-slate-400">
+                          <td className="hidden lg:table-cell px-4 py-3.5 text-center font-mono text-slate-400 whitespace-nowrap">
                             {r.timeSpentSeconds ? `${Math.floor(r.timeSpentSeconds / 60)}p ${r.timeSpentSeconds % 60}s` : '--'}
                           </td>
-                          <td className="px-4 py-3.5 text-center">
+                          <td className="hidden lg:table-cell px-4 py-3.5 text-center">
                             <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
                               isPass ? 'text-emerald-300 bg-emerald-950/60 border border-emerald-800/60' : 'text-rose-300 bg-rose-950/60 border border-rose-800/60'
                             }`}>
                               {isPass ? 'ĐẠT' : 'CHƯA ĐẠT'}
                             </span>
                           </td>
-                          <td className="px-4 py-3.5 text-right text-slate-400 text-[11px]">
+                          <td className="hidden sm:table-cell px-4 py-3.5 text-right text-slate-400 text-[11px] whitespace-nowrap">
                             {typeof r.submittedAt === 'string' ? r.submittedAt : 'Vừa xong'}
                           </td>
                           <td className="px-4 py-3.5 text-center">
