@@ -220,7 +220,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Plane className="w-4 h-4 text-indigo-400" />
-            <span className="text-slate-400 font-medium">Hệ Thống Sát Hạch Kiến Thức UAV & An Toàn Bay</span>
+            <span className="text-slate-400 font-medium">Nguyễn Văn Biên - Cậu bé Pilot</span>
           </div>
 
           <div className="flex items-center gap-4 text-slate-400">
