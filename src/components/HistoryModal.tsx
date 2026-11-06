@@ -36,7 +36,7 @@ export const HistoryModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-4xl bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-800 bg-slate-900/90">
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
@@ -85,7 +85,7 @@ export const HistoryModal: React.FC<Props> = ({ isOpen, onClose }) => {
               <p className="text-xs text-slate-500 mt-1">Khi thí sinh nộp bài, kết quả sẽ tự động được ghi nhận tại đây.</p>
             </div>
           ) : (
-            <div className="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/90 shadow">
+            <div className="border border-slate-800 rounded-xl overflow-x-auto bg-slate-900/90 shadow">
               <table className="w-full text-left text-xs text-slate-300">
                 <thead className="bg-slate-800/80 text-slate-400 font-semibold uppercase tracking-wider border-b border-slate-800">
                   <tr>
@@ -96,7 +96,7 @@ export const HistoryModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     <th className="px-3 sm:px-4 py-3 text-center">Điểm số</th>
                     <th className="hidden md:table-cell px-4 py-3 text-center">Đúng / Tổng</th>
                     <th className="hidden lg:table-cell px-4 py-3 text-center">Thời gian</th>
-                    <th className="hidden sm:table-cell px-4 py-3 text-right">Ngày nộp</th>
+                    <th className="hidden sm:table-cell px-4 sm:px-6 py-3 text-right min-w-[155px]">Ngày nộp</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60">
@@ -154,7 +154,7 @@ export const HistoryModal: React.FC<Props> = ({ isOpen, onClose }) => {
                         </td>
 
                         {/* 8. Ngày nộp bài (ẩn trên điện thoại) */}
-                        <td className="hidden sm:table-cell px-4 py-3 text-right text-slate-400 text-[11px] whitespace-nowrap">
+                        <td className="hidden sm:table-cell px-4 sm:px-6 py-3 text-right text-slate-300 text-[11px] font-mono whitespace-nowrap min-w-[155px]">
                           {typeof rec.submittedAt === 'string' ? rec.submittedAt : 'Vừa xong'}
                         </td>
                       </tr>
