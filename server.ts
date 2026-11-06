@@ -30,8 +30,9 @@ app.get(['/api/chat', '/api/chat/health'], (_req, res) => {
 });
 
 // Khởi tạo Google GenAI SDK (chỉ chạy ở phía máy chủ)
+const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY || process.env.GOOGLE_API_KEY;
 const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
+  apiKey,
   httpOptions: {
     headers: {
       'User-Agent': 'aistudio-build',
@@ -62,8 +63,8 @@ ${context ? `\nNgữ cảnh tham chiếu từ bài thi/học tập hiện tại:
       parts: [{ text: m.content }],
     }));
 
-    // Thử lần lượt các model hợp lệ với cơ chế dự phòng khi có tải cao (503/429)
-    const candidateModels = ['gemini-3.8-flash', 'gemini-flash-latest', 'gemini-3.1-flash-lite'];
+    // Thử lần lượt các model được hỗ trợ chính thức và ổn định nhất
+    const candidateModels = ['gemini-3.1-flash-lite', 'gemini-3.8-flash'];
     let reply = '';
     let lastError: any = null;
 
@@ -83,20 +84,22 @@ ${context ? `\nNgữ cảnh tham chiếu từ bài thi/học tập hiện tại:
       } catch (err: any) {
         console.warn(`Lỗi khi gọi model ${model}:`, err?.message || err);
         lastError = err;
-        // Chờ 500ms trước khi thử model tiếp theo nếu gặp lỗi
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 300));
       }
     }
 
     if (!reply && lastError) {
-      throw lastError;
+      return res.status(500).json({ 
+        error: 'Máy chủ AI đang bận hoặc lưu lượng cao. Đồng chí vui lòng bấm "Thử lại" sau ít giây.' 
+      });
     }
 
     return res.json({ reply: reply || 'Xin lỗi, hiện tại tôi chưa thể phản hồi. Vui lòng thử lại sau ít giây.' });
   } catch (error: any) {
     console.error('Lỗi khi gọi Gemini API:', error);
-    const errorMessage = error?.message || 'Có lỗi xảy ra khi kết nối với Gemini AI';
-    return res.status(500).json({ error: errorMessage });
+    return res.status(500).json({ 
+      error: 'Máy chủ AI đang đồng bộ dữ liệu. Đồng chí vui lòng bấm "Thử lại".' 
+    });
   }
 });
 

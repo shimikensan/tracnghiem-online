@@ -106,10 +106,7 @@ export const ChatbotModal: React.FC<Props> = ({ isOpen, onClose, initialQuestion
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
-        if (response.status === 404) {
-          throw new Error('Máy chủ AI đang đồng bộ khởi động. Đồng chí vui lòng bấm "Thử lại" để tiếp tục.');
-        }
-        throw new Error(data.error || `Lỗi máy chủ (${response.status})`);
+        throw new Error(data.error || 'Dịch vụ AI đang kết nối lại. Đồng chí vui lòng bấm "Thử lại".');
       }
 
       const data = await response.json();
