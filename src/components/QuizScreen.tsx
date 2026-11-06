@@ -249,7 +249,7 @@ export const QuizScreen: React.FC<Props> = ({
                     title="Đánh dấu câu này để xem lại trước khi nộp"
                   >
                     <Flag className={`w-3.5 h-3.5 ${isFlagged ? 'fill-amber-400 text-amber-400' : ''}`} />
-                    <span>{isFlagged ? 'Đã gắn cờ' : 'Gắn cờ'}</span>
+                    <span>{isFlagged ? 'Đã quan tâm' : 'Quan tâm'}</span>
                   </button>
                 </div>
 
@@ -357,7 +357,7 @@ export const QuizScreen: React.FC<Props> = ({
                 <span className="w-3 h-3 rounded bg-slate-800 border border-slate-700 inline-block" /> Chưa làm
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-amber-500 inline-block" /> Gắn cờ
+                <span className="w-3 h-3 rounded bg-amber-500 inline-block" /> Quan tâm
               </span>
             </div>
 

@@ -40,7 +40,7 @@ export const Header: React.FC<Props> = ({
               </span>
             </div>
             <p className="text-[11px] text-slate-400 hidden sm:block">
-              Đánh giá sát hạch chuyên ngành điều khiển & kỹ thuật phương tiện bay
+              Tác giả: Đại úy Nguyễn Văn Biên - Cán bộ P7/K01
             </p>
           </div>
         </div>

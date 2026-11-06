@@ -45,16 +45,12 @@ const COMMON_POSITIONS = [
   'Chỉ huy Phòng'
 ];
 
-// Gợi ý danh sách các Đơn vị công tác phổ biến
+// Danh sách Đơn vị công tác theo cấu trúc Phòng 7
 const COMMON_UNITS = [
-  'Phòng Tham mưu',
-  'Phòng Tác chiến',
-  'Phòng Cảnh sát PCCC & CNCH',
-  'Đội UAV Trinh sát',
-  'Đội Kỹ thuật & Công nghệ',
-  'Trung tâm Thông tin chỉ huy',
-  'Tiểu đoàn Tác chiến điện tử',
-  'Học viện / Nhà trường'
+  'Đội 1 - Phòng 7',
+  'Đội 2 - Phòng 7',
+  'Đội 3 - Phòng 7',
+  'Phòng 7'
 ];
 
 export const WelcomeScreen: React.FC<Props> = ({ 
@@ -110,7 +106,7 @@ export const WelcomeScreen: React.FC<Props> = ({
           Hệ Thống Đánh Giá & Kiểm Tra Kiến Thức UAV
         </h2>
         <p className="mt-2.5 text-sm sm:text-base text-slate-400 max-w-2xl mx-auto">
-          Vui lòng khai báo đầy đủ 4 thông tin bắt buộc dưới đây để hệ thống định danh bài thi và tự động lưu điểm số vào cơ sở dữ liệu Firestore.
+          Vui lòng khai báo đầy đủ 4 thông tin bắt buộc dưới đây để hệ thống định danh bài thi và tự động lưu điểm số sau khi hoàn thành bài thi
         </p>
       </div>
 
@@ -304,7 +300,7 @@ export const WelcomeScreen: React.FC<Props> = ({
                   value={unit}
                   onBlur={() => setTouched(prev => ({ ...prev, unit: true }))}
                   onChange={(e) => setUnit(e.target.value)}
-                  placeholder="Ví dụ: Phòng Cảnh sát PCCC & CNCH, Đội UAV Số 1..."
+                  placeholder="Ví dụ: Đội 1 - Phòng 7, Phòng 7..."
                   className="w-full px-4 py-2.5 bg-slate-800/90 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-indigo-500 transition"
                 />
               ) : (
