@@ -98,9 +98,9 @@ export const WelcomeScreen: React.FC<Props> = ({
     <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12 animate-fade-in">
       {/* Hero Banner */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-semibold mb-4">
-          <Plane className="w-3.5 h-3.5" />
-          KỲ THI SÁT HẠCH NGHIỆP VỤ UAV NĂM 2026
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold mb-4 tracking-wide uppercase">
+          <Plane className="w-3.5 h-3.5 text-indigo-400" />
+          PHÒNG KỸ THUẬT BẢO VỆ - BỘ TƯ LỆNH CẢNH VỆ
         </div>
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
           Hệ Thống Đánh Giá & Kiểm Tra Kiến Thức UAV
