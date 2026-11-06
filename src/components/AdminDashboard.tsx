@@ -39,7 +39,8 @@ import {
   Check,
   Lock,
   KeyRound,
-  LogOut
+  LogOut,
+  Sparkles
 } from 'lucide-react';
 
 interface Props {
@@ -129,7 +130,7 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
       showToast('Vui lòng kết nối Firebase trước khi đồng bộ lên Cloud', 'error');
       return;
     }
-    if (!confirm('Đồng bộ 20 câu hỏi UAV mẫu vào Firestore collection `exam_questions`?')) {
+    if (!confirm(`Đồng bộ toàn bộ ${UAV_QUESTIONS.length} câu hỏi UAV mẫu vào Firestore collection \`exam_questions\`?`)) {
       return;
     }
 
@@ -486,10 +487,10 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
                 onClick={handleSyncDefaultQuestions}
                 disabled={isSyncing}
                 className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-sky-300 flex items-center gap-1.5 transition disabled:opacity-50"
-                title="Đồng bộ 20 câu hỏi UAV mẫu lên collection exam_questions"
+                title={`Đồng bộ ${UAV_QUESTIONS.length} câu hỏi UAV mẫu lên collection exam_questions`}
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
-                <span>Đồng bộ 20 câu lên Firestore</span>
+                <span>Đồng bộ {UAV_QUESTIONS.length} câu mẫu</span>
               </button>
 
               <button
@@ -509,6 +510,32 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
                 <Download className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Xuất JSON</span>
               </button>
+            </div>
+          </div>
+
+          {/* Random Selection Mechanism Info Card */}
+          <div className="bg-gradient-to-r from-indigo-950/70 via-slate-900 to-sky-950/50 p-4 rounded-2xl border border-indigo-800/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 shadow-md">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div className="text-xs">
+                <div className="font-bold text-white flex items-center gap-2">
+                  <span>Cơ chế đề thi: Tự động chọn ngẫu nhiên 20 câu hỏi</span>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-semibold">
+                    Đang kích hoạt
+                  </span>
+                </div>
+                <p className="text-slate-300 mt-0.5">
+                  Mỗi lượt làm bài của thí sinh sẽ được hệ thống bốc ngẫu nhiên <strong>20 câu hỏi</strong> trong tổng số <strong>{questions.length} câu</strong> của ngân hàng dữ liệu để tạo đề thi riêng biệt.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="text-xs text-slate-300 font-mono px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700/60">
+                Quy mô đề: <strong className="text-sky-300">{questions.length > 0 ? Math.min(20, questions.length) : 0} / {questions.length}</strong> câu
+              </span>
             </div>
           </div>
 

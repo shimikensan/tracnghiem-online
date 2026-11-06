@@ -21,7 +21,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { UserCandidate, Question } from './types/quiz';
-import { UAV_QUESTIONS } from './data/uavQuestions';
+import { UAV_QUESTIONS, selectRandomQuestions, EXAM_QUESTION_COUNT } from './data/uavQuestions';
 import { fetchQuestionsFromFirestore } from './services/firebase';
 import { Header } from './components/Header';
 import { WelcomeScreen } from './components/WelcomeScreen';
@@ -38,8 +38,13 @@ export default function App() {
   // Trạng thái luồng màn hình: 'welcome' -> 'quiz' -> 'result' | 'admin'
   const [screen, setScreen] = useState<'welcome' | 'quiz' | 'result' | 'admin'>('welcome');
 
-  // Ngân hàng câu hỏi động (tải từ Firestore hoặc mặc định)
-  const [questions, setQuestions] = useState<Question[]>(UAV_QUESTIONS);
+  // Ngân hàng toàn bộ câu hỏi (tải từ Firestore hoặc mặc định 50 câu)
+  const [allQuestions, setAllQuestions] = useState<Question[]>(UAV_QUESTIONS);
+
+  // Bộ 20 câu hỏi được chọn ngẫu nhiên cho lượt thi của thí sinh
+  const [examQuestions, setExamQuestions] = useState<Question[]>(() => 
+    selectRandomQuestions(UAV_QUESTIONS, EXAM_QUESTION_COUNT)
+  );
 
   // Thông tin thí sinh đăng ký
   const [candidate, setCandidate] = useState<UserCandidate | null>(null);
@@ -55,12 +60,12 @@ export default function App() {
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [isAdminPasswordModalOpen, setIsAdminPasswordModalOpen] = useState(false);
 
-  // Tải câu hỏi từ Firestore khi khởi động
+  // Tải toàn bộ câu hỏi từ Firestore khi khởi động
   const loadDynamicQuestions = async () => {
     try {
       const res = await fetchQuestionsFromFirestore(UAV_QUESTIONS);
       if (res.questions && res.questions.length > 0) {
-        setQuestions(res.questions);
+        setAllQuestions(res.questions);
       }
     } catch (err) {
       console.warn('Sử dụng câu hỏi dự phòng:', err);
@@ -71,11 +76,14 @@ export default function App() {
     loadDynamicQuestions();
   }, []);
 
-  // Bắt đầu làm bài thi từ Màn hình 1
+  // Bắt đầu làm bài thi từ Màn hình 1 (chọn ngẫu nhiên 20 câu hỏi)
   const handleStartExam = (candidateData: UserCandidate) => {
     setCandidate(candidateData);
     setUserAnswers({});
     setTimeSpentSeconds(0);
+    // BỐC NGẪU NHIÊN 20 CÂU HỎI TRONG TỔNG SỐ CÂU HỎI
+    const selected20 = selectRandomQuestions(allQuestions, EXAM_QUESTION_COUNT);
+    setExamQuestions(selected20);
     setScreen('quiz');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -91,10 +99,12 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Làm lại bài thi mới
+  // Làm lại bài thi mới (sẽ bốc một bộ 20 câu hỏi ngẫu nhiên mới)
   const handleRetakeExam = () => {
     setUserAnswers({});
     setTimeSpentSeconds(0);
+    const fresh20 = selectRandomQuestions(allQuestions, EXAM_QUESTION_COUNT);
+    setExamQuestions(fresh20);
     setScreen('welcome');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -159,13 +169,16 @@ export default function App() {
         {screen === 'welcome' && (
           <WelcomeScreen
             onStartExam={handleStartExam}
+            totalPoolCount={allQuestions.length}
+            examQuestionsCount={Math.min(EXAM_QUESTION_COUNT, allQuestions.length)}
           />
         )}
 
         {screen === 'quiz' && candidate && (
           <QuizScreen
             candidate={candidate}
-            questions={questions}
+            questions={examQuestions}
+            totalPoolCount={allQuestions.length}
             onSubmitQuiz={handleSubmitQuiz}
           />
         )}
@@ -173,7 +186,8 @@ export default function App() {
         {screen === 'result' && candidate && (
           <ResultScreen
             candidate={candidate}
-            questions={questions}
+            questions={examQuestions}
+            totalPoolCount={allQuestions.length}
             userAnswers={userAnswers}
             timeSpentSeconds={timeSpentSeconds}
             onRetakeExam={handleRetakeExam}

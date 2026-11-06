@@ -348,12 +348,17 @@ export async function saveExamResultToFirestore(
       wrongCount: Number(result.wrongCount) || 0,
       unansweredCount: Number(result.unansweredCount) || 0,
       totalQuestions: Number(result.totalQuestions) || 0,
+      poolTotalQuestions: Number(result.poolTotalQuestions) || undefined,
       percentage: Number(result.percentage) || 0,
       timeSpentSeconds: Number(result.timeSpentSeconds) || 0,
       submittedAt: serverTimestamp(),
       clientSubmittedAt: new Date().toISOString(),
       isPassed: Boolean(result.isPassed)
     };
+
+    if (result.poolTotalQuestions) {
+      docData.poolTotalQuestions = Number(result.poolTotalQuestions);
+    }
 
     if (result.answersSummary) {
       docData.answersSummary = result.answersSummary;
@@ -446,6 +451,7 @@ export async function getExamResultsHistory(): Promise<{ results: ExamResultReco
           wrongCount: data.wrongCount ?? 0,
           unansweredCount: data.unansweredCount ?? 0,
           totalQuestions: data.totalQuestions ?? 0,
+          poolTotalQuestions: data.poolTotalQuestions || undefined,
           percentage: data.percentage ?? 0,
           timeSpentSeconds: data.timeSpentSeconds ?? 0,
           submittedAt: dateStr,

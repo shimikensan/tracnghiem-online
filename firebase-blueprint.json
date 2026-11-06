@@ -43,7 +43,11 @@
         },
         "totalQuestions": {
           "type": "number",
-          "description": "Tổng số câu hỏi"
+          "description": "Tổng số câu hỏi của bài thi (20 câu)"
+        },
+        "poolTotalQuestions": {
+          "type": "number",
+          "description": "Tổng số câu hỏi trong ngân hàng đề thi"
         },
         "percentage": {
           "type": "number",

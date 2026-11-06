@@ -18,6 +18,8 @@ interface Props {
   onStartExam: (candidate: UserCandidate) => void;
   onOpenFirebaseModal?: () => void;
   isFirebaseReady?: boolean;
+  totalPoolCount?: number;
+  examQuestionsCount?: number;
 }
 
 const COMMON_RANKS = [
@@ -58,7 +60,9 @@ const COMMON_UNITS = [
 export const WelcomeScreen: React.FC<Props> = ({ 
   onStartExam, 
   onOpenFirebaseModal, 
-  isFirebaseReady 
+  isFirebaseReady,
+  totalPoolCount = 50,
+  examQuestionsCount = 20
 }) => {
   const [fullName, setFullName] = useState('');
   const [rank, setRank] = useState('');
@@ -391,9 +395,16 @@ export const WelcomeScreen: React.FC<Props> = ({
               <div className="flex items-center justify-between p-3 rounded-xl bg-slate-800/60 border border-slate-700/50">
                 <span className="text-slate-400 flex items-center gap-2">
                   <Plane className="w-4 h-4 text-emerald-400" />
-                  Số lượng câu hỏi:
+                  Số lượng câu hỏi trong đề:
                 </span>
-                <span className="font-bold text-white text-sm">{UAV_QUESTIONS.length} câu</span>
+                <div className="text-right">
+                  <span className="font-bold text-white text-sm">{examQuestionsCount} câu</span>
+                  {totalPoolCount > examQuestionsCount && (
+                    <span className="block text-[10px] text-indigo-300 font-medium">
+                      (Chọn ngẫu nhiên từ {totalPoolCount} câu)
+                    </span>
+                  )}
+                </div>
               </div>
 
               <div className="flex items-center justify-between p-3 rounded-xl bg-slate-800/60 border border-slate-700/50">
@@ -413,7 +424,14 @@ export const WelcomeScreen: React.FC<Props> = ({
               </div>
             </div>
 
-            <div className="mt-5 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-300 leading-relaxed">
+            <div className="mt-4 p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-[11px] text-indigo-200 leading-relaxed flex items-start gap-2">
+              <Sparkles className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+              <div>
+                <strong>Cơ chế bốc đề ngẫu nhiên:</strong> Mỗi lượt thi, hệ thống sẽ tự động <strong>chọn ngẫu nhiên 20 câu hỏi</strong> từ ngân hàng {totalPoolCount} câu hỏi, bảo đảm tính công bằng và độc lập cho từng thí sinh.
+              </div>
+            </div>
+
+            <div className="mt-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-300 leading-relaxed">
               <strong>Lưu ý quan trọng:</strong> Hệ thống có đồng hồ đếm ngược đúng <strong>{EXAM_DURATION_MINUTES} phút</strong>. Khi hết thời gian, bài thi sẽ <strong>tự động nộp</strong> và lưu kết quả vào Firestore ngay lập tức.
             </div>
           </div>

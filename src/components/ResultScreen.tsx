@@ -18,6 +18,7 @@ import {
 interface Props {
   candidate: UserCandidate;
   questions: Question[];
+  totalPoolCount?: number;
   userAnswers: Record<number, 'A' | 'B' | 'C' | 'D'>;
   timeSpentSeconds: number;
   onRetakeExam: () => void;
@@ -27,6 +28,7 @@ interface Props {
 export const ResultScreen: React.FC<Props> = ({
   candidate,
   questions,
+  totalPoolCount,
   userAnswers,
   timeSpentSeconds,
   onRetakeExam,
@@ -122,6 +124,7 @@ export const ResultScreen: React.FC<Props> = ({
       wrongCount: wrongCount,
       unansweredCount: unansweredCount,
       totalQuestions: totalQuestions,
+      poolTotalQuestions: totalPoolCount,
       percentage: percentage,
       timeSpentSeconds: timeSpentSeconds,
       submittedAt: new Date().toISOString(),
@@ -222,6 +225,9 @@ export const ResultScreen: React.FC<Props> = ({
               </div>
               <div className="text-xs text-slate-400 font-mono mt-1">
                 (Tương đương {score100}/100 điểm - Tỷ lệ đúng {percentage}%)
+              </div>
+              <div className="text-[11px] text-indigo-300/90 font-medium mt-1 flex items-center justify-center gap-1">
+                <span>🎯 Đề thi 20 câu hỏi chọn ngẫu nhiên {totalPoolCount ? `từ kho ${totalPoolCount} câu` : ''}</span>
               </div>
             </div>
 

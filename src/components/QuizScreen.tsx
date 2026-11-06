@@ -12,12 +12,14 @@ import {
 interface Props {
   candidate: UserCandidate;
   questions: Question[];
+  totalPoolCount?: number;
   onSubmitQuiz: (answers: Record<number, 'A' | 'B' | 'C' | 'D'>, timeSpentSeconds: number) => void;
 }
 
 export const QuizScreen: React.FC<Props> = ({
   candidate,
   questions,
+  totalPoolCount,
   onSubmitQuiz
 }) => {
   // State quản lý câu trả lời: questionId -> 'A' | 'B' | 'C' | 'D'
@@ -119,6 +121,9 @@ export const QuizScreen: React.FC<Props> = ({
                 </span>
                 <span className="text-xs px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-amber-300 font-medium">
                   {candidate.rank}
+                </span>
+                <span className="hidden sm:inline-flex text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                  {totalPoolCount ? `Đề 20 câu / ${totalPoolCount} câu gốc` : 'Đề 20 câu ngẫu nhiên'}
                 </span>
               </div>
               <p className="text-xs text-slate-400">
