@@ -248,6 +248,63 @@ export async function deleteQuestionFromFirestore(
 }
 
 /**
+ * Xóa nhiều câu hỏi được chọn khỏi Firestore (`exam_questions`) và LocalStorage
+ */
+export async function deleteMultipleQuestionsFromFirestore(
+  questionsToDelete: { firestoreId?: string; id?: number }[]
+): Promise<{ success: boolean; count: number; mode: 'firestore' | 'local' }> {
+  const db = getFirebaseDb();
+  let deletedCount = 0;
+
+  if (db) {
+    try {
+      for (const item of questionsToDelete) {
+        if (item.firestoreId && !item.firestoreId.startsWith('local_')) {
+          await deleteDoc(doc(db, 'exam_questions', item.firestoreId));
+        }
+        deleteQuestionFromLocalStorage(item.id, item.firestoreId);
+        deletedCount++;
+      }
+      return { success: true, count: deletedCount, mode: 'firestore' };
+    } catch (err) {
+      console.error('Lỗi xóa nhiều câu hỏi khỏi Firestore:', err);
+    }
+  }
+
+  questionsToDelete.forEach((item) => {
+    deleteQuestionFromLocalStorage(item.id, item.firestoreId);
+    deletedCount++;
+  });
+  return { success: true, count: deletedCount, mode: 'local' };
+}
+
+/**
+ * Xóa toàn bộ câu hỏi trong cơ sở dữ liệu Firestore (`exam_questions`) và LocalStorage
+ */
+export async function deleteAllQuestionsFromFirestore(): Promise<{ success: boolean; count: number; mode: 'firestore' | 'local' }> {
+  const db = getFirebaseDb();
+  let deletedCount = 0;
+
+  if (db) {
+    try {
+      const q = query(collection(db, 'exam_questions'));
+      const querySnapshot = await getDocs(q);
+      for (const docSnap of querySnapshot.docs) {
+        await deleteDoc(docSnap.ref);
+        deletedCount++;
+      }
+      localStorage.removeItem(STORAGE_KEY_LOCAL_QUESTIONS);
+      return { success: true, count: deletedCount, mode: 'firestore' };
+    } catch (err) {
+      console.error('Lỗi xóa toàn bộ câu hỏi trên Firestore:', err);
+    }
+  }
+
+  localStorage.removeItem(STORAGE_KEY_LOCAL_QUESTIONS);
+  return { success: true, count: deletedCount, mode: 'local' };
+}
+
+/**
  * Đồng bộ toàn bộ danh sách câu hỏi mẫu lên Firestore
  */
 export async function syncDefaultQuestionsToFirestore(

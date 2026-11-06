@@ -4,6 +4,8 @@ import {
   fetchQuestionsFromFirestore, 
   saveQuestionToFirestore, 
   deleteQuestionFromFirestore, 
+  deleteMultipleQuestionsFromFirestore,
+  deleteAllQuestionsFromFirestore,
   syncDefaultQuestionsToFirestore,
   getExamResultsHistory,
   deleteExamResultFromFirestore,
@@ -68,6 +70,8 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
   const [showJsonImportModal, setShowJsonImportModal] = useState(false);
   const [jsonInput, setJsonInput] = useState('');
   const [isSyncing, setIsSyncing] = useState(false);
+  const [selectedQuestionIds, setSelectedQuestionIds] = useState<number[]>([]);
+  const [isDeletingBulk, setIsDeletingBulk] = useState(false);
 
   // Results Management State
   const [results, setResults] = useState<ExamResultRecord[]>([]);
@@ -195,10 +199,81 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
       const res = await deleteQuestionFromFirestore(q.firestoreId, q.id);
       if (res.success) {
         showToast(`Đã xóa câu hỏi #${q.id}`, 'info');
+        setSelectedQuestionIds(prev => prev.filter(id => id !== q.id));
         loadQuestions();
       }
     } catch (err: any) {
       showToast('Lỗi xóa câu hỏi: ' + err.message, 'error');
+    }
+  };
+
+  // Chọn / bỏ chọn 1 câu hỏi
+  const handleToggleSelectQuestion = (id: number) => {
+    setSelectedQuestionIds(prev =>
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
+  };
+
+  // Chọn tất cả hoặc bỏ chọn tất cả
+  const handleToggleSelectAll = (filteredList: Question[]) => {
+    if (selectedQuestionIds.length === filteredList.length && filteredList.length > 0) {
+      setSelectedQuestionIds([]);
+    } else {
+      setSelectedQuestionIds(filteredList.map(q => q.id));
+    }
+  };
+
+  // Xóa các câu hỏi đã chọn
+  const handleDeleteSelectedQuestions = async () => {
+    if (selectedQuestionIds.length === 0) return;
+    if (!confirm(`Bạn có chắc chắn muốn xóa ${selectedQuestionIds.length} câu hỏi đã chọn? Thao tác này không thể hoàn tác.`)) {
+      return;
+    }
+
+    setIsDeletingBulk(true);
+    try {
+      const questionsToDelete = questions
+        .filter(q => selectedQuestionIds.includes(q.id))
+        .map(q => ({ firestoreId: q.firestoreId, id: q.id }));
+
+      const res = await deleteMultipleQuestionsFromFirestore(questionsToDelete);
+      if (res.success) {
+        showToast(`Đã xóa thành công ${res.count} câu hỏi đã chọn!`, 'info');
+        setSelectedQuestionIds([]);
+        loadQuestions();
+      }
+    } catch (err: any) {
+      showToast('Lỗi xóa nhiều câu hỏi: ' + err.message, 'error');
+    } finally {
+      setIsDeletingBulk(false);
+    }
+  };
+
+  // Xóa toàn bộ câu hỏi trong ngân hàng dữ liệu
+  const handleDeleteAllQuestions = async () => {
+    if (questions.length === 0) {
+      showToast('Ngân hàng câu hỏi hiện đang trống.', 'info');
+      return;
+    }
+
+    const confirmMsg = `⚠️ CẢNH BÁO QUAN TRỌNG:\n\nBạn có chắc chắn muốn XÓA TOÀN BỘ ${questions.length} CÂU HỎI trong ngân hàng dữ liệu?\n\nToàn bộ dữ liệu câu hỏi trên Firestore và bộ nhớ máy sẽ bị xóa vĩnh viễn!`;
+    if (!confirm(confirmMsg)) {
+      return;
+    }
+
+    setIsDeletingBulk(true);
+    try {
+      const res = await deleteAllQuestionsFromFirestore();
+      if (res.success) {
+        showToast(`Đã xóa toàn bộ ${res.count} câu hỏi trong ngân hàng dữ liệu!`, 'info');
+        setSelectedQuestionIds([]);
+        setQuestions([]);
+        loadQuestions();
+      }
+    } catch (err: any) {
+      showToast('Lỗi xóa toàn bộ câu hỏi: ' + err.message, 'error');
+    } finally {
+      setIsDeletingBulk(false);
     }
   };
 
@@ -512,6 +587,18 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
                 <Download className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Xuất JSON</span>
               </button>
+
+              {/* Nút Xóa hết câu hỏi */}
+              <button
+                type="button"
+                onClick={handleDeleteAllQuestions}
+                disabled={isDeletingBulk || questions.length === 0}
+                className="px-3 py-2 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/60 text-xs font-semibold text-rose-300 flex items-center gap-1.5 transition disabled:opacity-50 cursor-pointer shadow-sm"
+                title="Xóa toàn bộ câu hỏi trong ngân hàng dữ liệu"
+              >
+                <Trash2 className="w-3.5 h-3.5 text-rose-400" />
+                <span>Xóa hết câu hỏi</span>
+              </button>
             </div>
           </div>
 
@@ -541,6 +628,56 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
             </div>
           </div>
 
+          {/* Multi-Select & Batch Actions Bar */}
+          {!questionsLoading && filteredQuestions.length > 0 && (
+            <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs shadow-md">
+              <div className="flex items-center gap-3">
+                <label className="flex items-center gap-2.5 cursor-pointer font-medium text-slate-300 hover:text-white select-none">
+                  <input
+                    type="checkbox"
+                    checked={filteredQuestions.length > 0 && selectedQuestionIds.length === filteredQuestions.length}
+                    onChange={() => handleToggleSelectAll(filteredQuestions)}
+                    className="w-4 h-4 rounded bg-slate-800 border-slate-700 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+                  />
+                  <span>
+                    Chọn tất cả ({selectedQuestionIds.length}/{filteredQuestions.length} câu)
+                  </span>
+                </label>
+                {selectedQuestionIds.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedQuestionIds([])}
+                    className="text-slate-400 hover:text-slate-200 underline text-[11px] cursor-pointer"
+                  >
+                    Bỏ chọn
+                  </button>
+                )}
+              </div>
+
+              {selectedQuestionIds.length > 0 ? (
+                <div className="flex items-center gap-2 animate-fade-in">
+                  <span className="text-amber-300 text-[11px] font-semibold hidden sm:inline">
+                    Đã chọn {selectedQuestionIds.length} câu:
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleDeleteSelectedQuestions}
+                    disabled={isDeletingBulk}
+                    className="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-md shadow-rose-950/50 transition cursor-pointer disabled:opacity-50"
+                    title="Xóa các câu hỏi đã chọn"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Xóa {selectedQuestionIds.length} câu đã chọn</span>
+                  </button>
+                </div>
+              ) : (
+                <span className="text-[11px] text-slate-500 italic hidden sm:inline">
+                  Tích chọn vào từng câu hỏi để xóa hàng loạt
+                </span>
+              )}
+            </div>
+          )}
+
           {/* Questions Grid / List */}
           {questionsLoading ? (
             <div className="py-20 text-center text-slate-400">
@@ -551,31 +688,45 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
             <div className="py-16 text-center text-slate-500 bg-slate-900/60 rounded-2xl border border-slate-800">
               <BookOpen className="w-12 h-12 mx-auto mb-3 text-slate-600" />
               <p className="font-semibold text-slate-300">Không tìm thấy câu hỏi nào</p>
-              <p className="text-xs mt-1">Bấm "Thêm câu hỏi" hoặc "Đồng bộ 20 câu lên Firestore" để khởi tạo.</p>
+              <p className="text-xs mt-1">Bấm "Thêm câu hỏi" hoặc "Đồng bộ 50 câu mẫu" để khởi tạo.</p>
             </div>
           ) : (
             <div className="space-y-4">
-              {filteredQuestions.map((q, idx) => (
-                <div
-                  key={q.firestoreId || q.id}
-                  className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-start gap-3">
-                      <span className="w-7 h-7 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
-                        {q.id || idx + 1}
-                      </span>
-                      <div>
-                        <h4 className="text-sm font-semibold text-white leading-relaxed">
-                          {q.question}
-                        </h4>
-                        {q.explanation && (
-                          <p className="text-xs text-slate-400 mt-1 italic">
-                            💡 Giải thích: {q.explanation}
-                          </p>
-                        )}
+              {filteredQuestions.map((q, idx) => {
+                const isSelected = selectedQuestionIds.includes(q.id);
+                return (
+                  <div
+                    key={q.firestoreId || q.id}
+                    className={`bg-slate-900/90 border rounded-2xl p-5 transition ${
+                      isSelected
+                        ? 'border-indigo-500 bg-indigo-950/20 ring-1 ring-indigo-500/50 shadow-lg shadow-indigo-950/40'
+                        : 'border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-start gap-3">
+                        <label className="pt-1 cursor-pointer flex items-center" title="Chọn câu này để xóa">
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => handleToggleSelectQuestion(q.id)}
+                            className="w-4 h-4 rounded bg-slate-800 border-slate-700 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+                          />
+                        </label>
+                        <span className="w-7 h-7 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                          {q.id || idx + 1}
+                        </span>
+                        <div>
+                          <h4 className="text-sm font-semibold text-white leading-relaxed">
+                            {q.question}
+                          </h4>
+                          {q.explanation && (
+                            <p className="text-xs text-slate-400 mt-1 italic">
+                              💡 Giải thích: {q.explanation}
+                            </p>
+                          )}
+                        </div>
                       </div>
-                    </div>
 
                     <div className="flex items-center gap-1.5 shrink-0">
                       <button
@@ -627,9 +778,10 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
                     })}
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
+              );
+            })}
+          </div>
+        )}
         </div>
       )}
 
