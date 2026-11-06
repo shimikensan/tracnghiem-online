@@ -2,575 +2,1227 @@ import { Question } from '../types/quiz';
 
 /**
  * =========================================================================================
- * 📌 HỆ THỐNG NGÂN HÀNG CÂU HỎI TRẮC NGHIỆM UAV (50 CÂU HỎI CHUẨN)
+ * 📌 HỆ THỐNG NGÂN HÀNG CÂU HỎI TRẮC NGHIỆM UAV (50 CÂU HỎI CHUẨN QUÂN SỰ & KỸ THUẬT)
  * 
- * - Mỗi câu hỏi có 3 đáp án: A, B, C và 1 đáp án đúng duy nhất.
- * - Hệ thống sẽ tự động CHỌN NGẪU NHIÊN 20 CÂU HỎI trong tổng số câu hỏi của ngân hàng
- *   (hoặc từ Firebase Firestore nếu quản trị viên đã đồng bộ / nhập thêm).
+ * - Mỗi câu hỏi có 4 ĐÁP ÁN: A, B, C, D và 1 đáp án đúng duy nhất.
+ * - Quy chế thi chuẩn:
+ *   + Thời gian làm bài: 25 PHÚT
+ *   + Số lượng câu hỏi trong bộ đề: 30 CÂU HỎI chọn ngẫu nhiên từ ngân hàng
+ *   + Hình thức trắc nghiệm: 4 ĐÁP ÁN (A, B, C, D)
  * =========================================================================================
  */
 
 export const UAV_QUESTIONS: Question[] = [
   {
-    id: 1,
-    question: "UAV là từ viết tắt của thuật ngữ tiếng Anh nào sau đây?",
-    options: [
-      { key: "A", text: "Unmanned Aerial Vehicle" },
-      { key: "B", text: "Universal Aviation Vehicle" },
-      { key: "C", text: "United Airborne Vector" },
+    "id": 1,
+    "question": "UAV là từ viết tắt của thuật ngữ tiếng Anh nào sau đây?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Unmanned Aerial Vehicle"
+      },
+      {
+        "key": "B",
+        "text": "Universal Aviation Vehicle"
+      },
+      {
+        "key": "C",
+        "text": "United Airborne Vector"
+      },
+      {
+        "key": "D",
+        "text": "Uncontrolled Air Vessel"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "UAV là viết tắt của 'Unmanned Aerial Vehicle' (Phương tiện bay không người lái)."
+    "correctAnswer": "A",
+    "explanation": "UAV là viết tắt của 'Unmanned Aerial Vehicle' (Phương tiện bay không người lái)."
   },
   {
-    id: 2,
-    question: "Trong cấu trúc cơ bản của một hệ thống UAV, trạm điều khiển mặt đất thường được viết tắt là gì?",
-    options: [
-      { key: "A", text: "GCS (Ground Control Station)" },
-      { key: "B", text: "FCS (Flight Control System)" },
-      { key: "C", text: "IMU (Inertial Measurement Unit)" },
+    "id": 2,
+    "question": "Trong cấu trúc cơ bản của một hệ thống UAV, trạm điều khiển mặt đất thường được viết tắt là gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "IMU (Inertial Measurement Unit)"
+      },
+      {
+        "key": "B",
+        "text": "FCS (Flight Control System)"
+      },
+      {
+        "key": "C",
+        "text": "GCS (Ground Control Station)"
+      },
+      {
+        "key": "D",
+        "text": "ESC (Electronic Speed Controller)"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "GCS (Ground Control Station) là trạm điều khiển mặt đất tiếp nhận dữ liệu telemetry và gửi lệnh điều khiển tới UAV."
+    "correctAnswer": "C",
+    "explanation": "GCS (Ground Control Station) là trạm điều khiển mặt đất tiếp nhận dữ liệu telemetry và gửi lệnh điều khiển tới UAV."
   },
   {
-    id: 3,
-    question: "Hệ thống định vị nào thường được tích hợp trên UAV để duy trì vị trí và tự động quay về điểm xuất phát (RTH - Return To Home)?",
-    options: [
-      { key: "A", text: "Hệ thống vệ tinh dẫn đường GNSS (GPS, GLONASS, BeiDou)" },
-      { key: "B", text: "Hệ thống sonar siêu âm tầm ngắn dưới 3 mét" },
-      { key: "C", text: "Hệ thống la bàn cơ khí truyền thống" },
+    "id": 3,
+    "question": "Hệ thống định vị nào sau đây thường được tích hợp trên UAV để duy trì vị trí và tự động quay về điểm xuất phát (RTH)?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Hệ thống sonar siêu âm tầm ngắn dưới 3 mét"
+      },
+      {
+        "key": "B",
+        "text": "Hệ thống vệ tinh dẫn đường GNSS (GPS, GLONASS, BeiDou, Galileo)"
+      },
+      {
+        "key": "C",
+        "text": "Hệ thống la bàn cơ khí truyền thống trên tàu thủy"
+      },
+      {
+        "key": "D",
+        "text": "Cảm biến quang học đo phản xạ bề mặt"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Hệ thống GNSS (GPS, GLONASS, v.v.) cung cấp tọa độ địa lý chính xác giúp UAV định vị không gian và tự động quay về an toàn."
+    "correctAnswer": "B",
+    "explanation": "Hệ thống GNSS (GPS, GLONASS, BeiDou, Galileo) cung cấp tọa độ địa lý 3 chiều chính xác giúp UAV định vị không gian và tự động quay về an toàn."
   },
   {
-    id: 4,
-    question: "Khi bay trong điều kiện gió mạnh vượt quá giới hạn thiết kế, hiện tượng nào dễ xảy ra nhất đối với UAV?",
-    options: [
-      { key: "A", text: "Tự động tăng tốc độ bay tối đa và triệt tiêu sức cản" },
-      { key: "B", text: "Mất ổn định luồng khí khí động học và nguy cơ mất kiểm soát hướng bay" },
-      { key: "C", text: "Pin phát nổ do tốc độ gió làm lạnh quá mức" },
+    "id": 4,
+    "question": "Khi bay trong điều kiện gió mạnh vượt quá giới hạn thiết kế khí động học, nguy cơ nghiêm trọng nhất xảy ra với UAV là gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Tự động tăng tốc độ bay tối đa và triệt tiêu sức cản"
+      },
+      {
+        "key": "B",
+        "text": "Mất ổn định luồng khí, tiêu hao năng lượng đột biến và mất kiểm soát tư thế bay"
+      },
+      {
+        "key": "C",
+        "text": "Động cơ tự đảo chiều quay ngược lại chiều ban đầu"
+      },
+      {
+        "key": "D",
+        "text": "Tín hiệu sóng vệ tinh GNSS bị thổi lệch quỹ đạo"
+      }
     ],
-    correctAnswer: "B",
-    explanation: "Gió vượt ngưỡng cho phép gây nhiễu động dòng khí trên cánh và cánh quạt, dẫn đến mất cân bằng và nguy cơ mất kiểm soát."
+    "correctAnswer": "B",
+    "explanation": "Gió vượt ngưỡng cho phép gây nhiễu động dòng khí trên bề mặt cánh và cánh quạt, làm động cơ hoạt động quá tải và dễ dẫn tới mất kiểm soát tư thế bay."
   },
   {
-    id: 5,
-    question: "Cảm biến IMU (Inertial Measurement Unit) trên UAV có chức năng chính là gì?",
-    options: [
-      { key: "A", text: "Đo gia tốc, vận tốc góc và xác định tư thế bay (Roll, Pitch, Yaw)" },
-      { key: "B", text: "Truyền hình ảnh độ phân giải cao về trung tâm chỉ huy" },
-      { key: "C", text: "Đo nhiệt độ của bình ắc quy trong suốt quá trình bay" },
+    "id": 5,
+    "question": "Khối cảm biến quán tính IMU (Inertial Measurement Unit) trên UAV có chức năng cốt lõi là gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Truyền hình ảnh độ nét cao về trung tâm chỉ huy mặt đất"
+      },
+      {
+        "key": "B",
+        "text": "Đo nhiệt độ của bình ắc quy trong suốt quá trình bay"
+      },
+      {
+        "key": "C",
+        "text": "Đo gia tốc, vận tốc góc và xác định tư thế bay (Roll, Pitch, Yaw)"
+      },
+      {
+        "key": "D",
+        "text": "Phát hiện mục tiêu kim loại ngầm dưới lòng đất"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Khối cảm biến quán tính IMU bao gồm con quay hồi chuyển (gyroscope) và gia tốc kế (accelerometer) giúp xác định tư thế không gian của UAV."
+    "correctAnswer": "C",
+    "explanation": "Khối cảm biến quán tính IMU bao gồm con quay hồi chuyển (gyroscope) và gia tốc kế (accelerometer) giúp vi điều khiển bay tính toán tư thế không gian (Roll, Pitch, Yaw) liên tục hàng trăm lần mỗi giây."
   },
   {
-    id: 6,
-    question: "Tính năng Fail-Safe trên phần mềm điều khiển bay UAV thường được kích hoạt trong tình huống nào?",
-    options: [
-      { key: "A", text: "Khi phát hiện mất tín hiệu điều khiển RC hoặc pin dưới ngưỡng an toàn" },
-      { key: "B", text: "Khi nhiệt độ môi trường đạt mức 25 độ C lý tưởng" },
-      { key: "C", text: "Khi tốc độ bay đạt ngưỡng tối thiểu" },
+    "id": 6,
+    "question": "Tính năng an toàn tự động Fail-Safe trên UAV thường được kích hoạt trong trường hợp nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Khi phát hiện mất tín hiệu liên lạc C2 hoặc điện áp pin tụt dưới ngưỡng an toàn"
+      },
+      {
+        "key": "B",
+        "text": "Khi nhiệt độ môi trường xung quanh đạt mức lý tưởng 25 độ C"
+      },
+      {
+        "key": "C",
+        "text": "Khi UAV đang duy trì tốc độ bay ổn định trên hành trình"
+      },
+      {
+        "key": "D",
+        "text": "Khi nhận đủ tín hiệu từ trên 12 vệ tinh GNSS"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Tính năng an toàn dự phòng Fail-Safe tự động xử lý khi mất sóng liên lạc hoặc pin yếu để bảo vệ phương tiện và an toàn mặt đất."
+    "correctAnswer": "A",
+    "explanation": "Quy trình Fail-Safe tự động can thiệp (RTH quay về, hạ cánh khẩn cấp hoặc treo cố định vị trí) khi mất sóng liên lạc điều khiển hoặc pin giảm xuống mức nguy hiểm."
   },
   {
-    id: 7,
-    question: "Loại pin nào hiện nay được sử dụng phổ biến nhất trên các dòng máy bay không người lái đa cánh (Multicopter) nhờ mật độ năng lượng cao?",
-    options: [
-      { key: "A", text: "Pin Lithium Polymer (LiPo)" },
-      { key: "B", text: "Pin khô chì - axit (Lead-acid)" },
-      { key: "C", text: "Pin kiềm Alkaline một lần" },
+    "id": 7,
+    "question": "Loại pin nào hiện nay được sử dụng phổ biến nhất trên các dòng máy bay không người lái đa cánh (Multicopter) nhờ mật độ năng lượng và dòng xả cao?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Pin khô chì - axit (Lead-acid)"
+      },
+      {
+        "key": "B",
+        "text": "Pin Lithium Polymer (LiPo)"
+      },
+      {
+        "key": "C",
+        "text": "Pin kiềm Alkaline dùng một lần"
+      },
+      {
+        "key": "D",
+        "text": "Pin Nickel-Cadmium (NiCd) cổ điển"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Pin LiPo có tỷ lệ năng lượng trên trọng lượng cao và khả năng phóng dòng điện lớn tức thời, rất thích hợp cho động cơ UAV."
+    "correctAnswer": "B",
+    "explanation": "Pin LiPo có tỷ lệ năng lượng trên trọng lượng cao, điện trở trong thấp và khả năng phóng dòng xả tức thời (C-rating lớn), đáp ứng yêu cầu vận hành của động cơ UAV."
   },
   {
-    id: 8,
-    question: "Dải tần số vô tuyến phổ biến nhất thường dùng cho đường truyền điều khiển và hình ảnh UAV là gì?",
-    options: [
-      { key: "A", text: "2.4 GHz và 5.8 GHz" },
-      { key: "B", text: "VHF 100 kHz đến 200 kHz" },
-      { key: "C", text: "Sóng ngắn AM 540 kHz" },
+    "id": 8,
+    "question": "Hai dải tần số vô tuyến chuẩn thường được sử dụng phổ biến nhất cho đường truyền điều khiển và truyền hình ảnh video UAV dân sự & chuyên dụng là gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "VHF 100 kHz và 200 kHz"
+      },
+      {
+        "key": "B",
+        "text": "Sóng ngắn HF 3 MHz và 30 MHz"
+      },
+      {
+        "key": "C",
+        "text": "2.4 GHz và 5.8 GHz"
+      },
+      {
+        "key": "D",
+        "text": "Tia hồng ngoại 850 nm và 940 nm"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "2.4 GHz (điều khiển khoảng cách xa) và 5.8 GHz (truyền tải hình ảnh FPV băng thông cao) là các băng tần tiêu chuẩn."
+    "correctAnswer": "C",
+    "explanation": "Băng tần 2.4 GHz (ưu thế xuyên thấu, khoảng cách điều khiển xa) và 5.8 GHz (băng thông lớn truyền dữ liệu video thời gian thực) là hai chuẩn truyền vô tuyến thông dụng nhất."
   },
   {
-    id: 9,
-    question: "Tải trọng quang điện tử (Payload) phổ biến nhất gắn trên UAV trinh sát, quan sát hiện đại gồm các thành phần nào?",
-    options: [
-      { key: "A", text: "Cụm camera zoom quang học kết hợp cảm biến nhiệt hồng ngoại và Gimbal ổn định 3 trục" },
-      { key: "B", text: "Loa phóng thanh công suất lớn và đèn led trang trí" },
-      { key: "C", text: "Hệ thống gầu xúc mẫu đất và máy nghiền đá tự động" },
+    "id": 9,
+    "question": "Tải trọng quang điện tử (Payload) chuẩn trên UAV phục vụ nhiệm vụ trinh sát, tuần tra ban ngày và ban đêm bao gồm những thành phần nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Cụm camera zoom quang học kết hợp cảm biến nhiệt hồng ngoại và Gimbal ổn định 3 trục"
+      },
+      {
+        "key": "B",
+        "text": "Loa phóng thanh công suất lớn và dàn đèn chiếu sáng công nghệ LED"
+      },
+      {
+        "key": "C",
+        "text": "Bộ thiết bị thu thập mẫu khí tầng cao và phao cứu sinh"
+      },
+      {
+        "key": "D",
+        "text": "Máy đo từ trường địa chất và cảm biến đo độ mặn nước biển"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Gimbal 3 trục giữ ổn định hình ảnh, kết hợp camera ánh sáng ngày và camera nhiệt hồng ngoại giúp quan sát cả ngày lẫn đêm."
+    "correctAnswer": "A",
+    "explanation": "Gimbal 3 trục giữ ổn định chống rung lắc kết hợp cụm camera kép (ánh sáng khả kiến quan sát chi tiết ban ngày và camera nhiệt hồng ngoại phát hiện thân nhiệt ban đêm) là cấu hình trinh sát tiêu chuẩn."
   },
   {
-    id: 10,
-    question: "Trước khi thực hiện chuyến bay huấn luyện hoặc làm nhiệm vụ, bước kiểm tra nào sau đây là BẮT BUỘC (Pre-flight check)?",
-    options: [
-      { key: "A", text: "Kiểm tra cơ khí cánh quạt, dung lượng pin, la bàn từ tính, vệ tinh GPS và cài đặt độ cao RTH an toàn" },
-      { key: "B", text: "Sơn lại toàn bộ thân vỏ và rửa động cơ bằng xà phòng ướt" },
-      { key: "C", text: "Tắt toàn bộ hệ thống định vị và bay bằng trực giác" },
+    "id": 10,
+    "question": "Trước khi thực hiện chuyến bay huấn luyện hoặc làm nhiệm vụ tác chiến, bước kiểm tra an toàn nào sau đây là BẮT BUỘC (Pre-flight check)?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Kiểm tra cơ học cánh quạt, chốt khóa cánh, dung lượng pin, la bàn từ tính và cài đặt độ cao RTH an toàn"
+      },
+      {
+        "key": "B",
+        "text": "Sơn mới lại toàn bộ vỏ thân và tháo rời động cơ để vệ sinh bằng nước"
+      },
+      {
+        "key": "C",
+        "text": "Tắt toàn bộ hệ thống định vị vệ tinh để bay hoàn toàn theo cảm giác"
+      },
+      {
+        "key": "D",
+        "text": "Điều chỉnh động cơ hoạt động ở công suất tối đa liên tục 10 phút trước cất cánh"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Quy trình kiểm tra an toàn trước chuyến bay (Pre-flight checklist) đảm bảo tất cả phần cứng, phần mềm và thông số cứu hộ hoạt động chuẩn xác."
+    "correctAnswer": "A",
+    "explanation": "Quy trình kiểm tra an toàn trước chuyến bay (Pre-flight checklist) đảm bảo phần cứng (cánh, pin, cảm biến) và phần mềm (tọa độ Home, độ cao RTH, mức pin Fail-Safe) hoạt động chính xác trước khi rời mặt đất."
   },
   {
-    id: 11,
-    question: "Độ cao RTH (Return To Home) cần được thiết lập như thế nào trước khi cất cánh làm nhiệm vụ?",
-    options: [
-      { key: "A", text: "Cao hơn chướng ngại vật cao nhất trong khu vực hoạt động bay ít nhất 15-20 mét" },
-      { key: "B", text: "Luôn đặt cố định ở độ cao 5 mét so với mặt đất" },
-      { key: "C", text: "Không cần thiết lập vì UAV tự động xuyên qua mọi chướng ngại vật" },
+    "id": 11,
+    "question": "Độ cao quay về an toàn RTH (Return To Home) cần được thiết lập như thế nào trước khi cất cánh thực hiện nhiệm vụ?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Luôn đặt cố định ở độ cao 5 mét so với mặt đất"
+      },
+      {
+        "key": "B",
+        "text": "Cao hơn chướng ngại vật cao nhất trong toàn bộ khu vực hoạt động bay ít nhất 15 - 20 mét"
+      },
+      {
+        "key": "C",
+        "text": "Không cần cài đặt vì UAV có thể tự động bay xuyên qua chướng ngại vật"
+      },
+      {
+        "key": "D",
+        "text": "Đặt ở độ cao tối đa mà thiết bị có thể bay được (trên 1000m)"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Độ cao quay về RTH phải cao hơn cây cối, tòa nhà hoặc cột điện cao nhất trong khu vực để tránh va chạm khi mất sóng tự bay về."
+    "correctAnswer": "B",
+    "explanation": "Độ cao RTH phải được cài đặt cao hơn tòa nhà, cây cối, cột điện cao thế cao nhất trong hành lang bay để tránh va chạm khi mất sóng tự bay về điểm Home."
   },
   {
-    id: 12,
-    question: "Hiện tượng 'Jello effect' (rung giật hình ảnh dạng gợn sóng) trong video truyền về từ UAV thường do nguyên nhân nào?",
-    options: [
-      { key: "A", text: "Rung chấn tần số cao từ động cơ hoặc cánh quạt chưa cân bằng động truyền sang cụm camera" },
-      { key: "B", text: "Tín hiệu sóng GPS quá mạnh làm lóa mắt cảm biến camera" },
-      { key: "C", text: "Dung lượng thẻ nhớ máy bay còn quá nhiều chỗ trống" },
+    "id": 12,
+    "question": "Hiện tượng 'Jello effect' (hình ảnh video bị rung giật dạng gợn sóng ngang) truyền về từ UAV thường do nguyên nhân chủ yếu nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Tín hiệu sóng GPS quá mạnh làm chói cảm biến quang học"
+      },
+      {
+        "key": "B",
+        "text": "Rung chấn cơ học tần số cao từ động cơ hoặc cánh quạt chưa cân bằng động truyền sang cụm camera"
+      },
+      {
+        "key": "C",
+        "text": "Ống kính camera bị quá lạnh do bay ở trần bay cao"
+      },
+      {
+        "key": "D",
+        "text": "Nhiệt độ của pin LiPo quá cao làm nhiễu cảm biến hình ảnh"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Rung chấn cơ khí tần số cao từ cánh quạt cong vênh hoặc đệm cao su giảm chấn gimbal bị chai cứng gây hiện tượng màn trập cuộn Jello."
+    "correctAnswer": "B",
+    "explanation": "Rung động cơ học tần số cao (do cánh quạt mẻ, cong vênh hoặc mất cân bằng động) truyền qua khung vỏ tới cảm biến Rolling Shutter của camera gây ra hiệu ứng gợn sóng 'Jello'."
   },
   {
-    id: 13,
-    question: "Bộ điều tốc điện tử ESC (Electronic Speed Controller) trên máy bay không người lái có chức năng gì?",
-    options: [
-      { key: "A", text: "Điều chỉnh tốc độ quay và hướng quay của động cơ không chổi than theo tín hiệu từ bộ điều khiển bay" },
-      { key: "B", text: "Thu nhận tín hiệu định vị vệ tinh GPS và GLONASS" },
-      { key: "C", text: "Ghi âm giọng nói của phi công tại trạm mặt đất" },
+    "id": 13,
+    "question": "Bộ điều tốc điện tử ESC (Electronic Speed Controller) trên máy bay không người lái đảm nhiệm vai trò gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Điều khiển tốc độ và hướng quay của động cơ điện không chổi than (BLDC)"
+      },
+      {
+        "key": "B",
+        "text": "Định vị vị trí địa lý của UAV trên bản đồ tác chiến"
+      },
+      {
+        "key": "C",
+        "text": "Thu nhận tín hiệu hình ảnh truyền hình mặt đất"
+      },
+      {
+        "key": "D",
+        "text": "Sạc điện tự động cho pin điều khiển từ xa GCS"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "ESC (Electronic Speed Controller) chuyển đổi điện một chiều từ pin thành dòng điện 3 pha điều khiển tốc độ vòng quay động cơ BLDC."
+    "correctAnswer": "A",
+    "explanation": "ESC nhận tín hiệu điều khiển từ Flight Controller và điều biến độ rộng xung (PWM/DShot) cấp dòng điện xoay chiều 3 pha tới các cuộn dây của động cơ BLDC để điều chỉnh tốc độ quay."
   },
   {
-    id: 14,
-    question: "Trong chế độ bay ATTI (Attitude Mode), hệ thống nào trên UAV KHÔNG can thiệp giữ vị trí?",
-    options: [
-      { key: "A", text: "Hệ thống định vị vệ tinh GPS (UAV chỉ giữ thăng bằng độ nghiêng và độ cao, sẽ bị trôi theo chiều gió)" },
-      { key: "B", text: "Cảm biến gia tốc con quay hồi chuyển IMU" },
-      { key: "C", text: "Hệ thống cấp nguồn điện từ pin" },
+    "id": 14,
+    "question": "Hệ thống truyền động của UAV cánh bằng (Fixed-wing) khác biệt cơ bản với UAV đa cánh (Multicopter) ở điểm nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "UAV cánh bằng tạo lực nâng chủ yếu nhờ luồng khí thổi qua bề mặt khí động của cánh khi tiến về phía trước"
+      },
+      {
+        "key": "B",
+        "text": "UAV cánh bằng hoàn toàn không cần động cơ để duy trì độ cao"
+      },
+      {
+        "key": "C",
+        "text": "UAV cánh bằng có thể đứng yên một chỗ trên không vô thời hạn"
+      },
+      {
+        "key": "D",
+        "text": "UAV cánh bằng không chịu tác động của trọng lực Trái Đất"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Ở chế độ ATTI mode, GPS không can thiệp giữ tọa độ; UAV sẽ trôi tự do theo hướng gió nếu phi công không chủ động bù lái."
+    "correctAnswer": "A",
+    "explanation": "UAV cánh bằng tạo lực nâng khí động học (Aerodynamic Lift) nhờ vận tốc tương đối giữa cánh và không khí, giúp tiết kiệm năng lượng và đạt tầm bay xa hơn multicopter."
   },
   {
-    id: 15,
-    question: "Khu vực cấm bay (No-Fly Zone) đối với tàu bay không người lái theo quy định hiện hành bao gồm khu vực nào sau đây?",
-    options: [
-      { key: "A", text: "Khu vực doanh trại quân đội, cơ quan đầu não, sân bay dân sự và căn cứ quân sự bảo vệ mục tiêu trọng yếu" },
-      { key: "B", text: "Các cánh đồng lúa và bãi đất trống ở ngoại thành xa khu dân cư" },
-      { key: "C", text: "Bề mặt hồ nước công cộng không có người qua lại" },
+    "id": 15,
+    "question": "Tư thế bay của UAV được mô tả bởi ba góc quay trong không gian ba chiều (Euler angles). Ba góc đó là gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "X, Y, Z (Tọa độ không gian Đề-các)"
+      },
+      {
+        "key": "B",
+        "text": "Roll (nghiêng ngang), Pitch (chúi/ngóc đầu), Yaw (xoay hướng mũi)"
+      },
+      {
+        "key": "C",
+        "text": "Alpha, Beta, Gamma (Góc phản xạ ánh sáng)"
+      },
+      {
+        "key": "D",
+        "text": "Latitude, Longitude, Altitude (Tọa độ địa lý)"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Khu vực quân sự, công trình an ninh quốc gia và phễu bay tĩnh không sân bay là khu vực cấm bay nghiêm ngặt theo quy định pháp luật."
+    "correctAnswer": "B",
+    "explanation": "Roll (lắc ngang quanh trục dọc), Pitch (chúi/ngóc quanh trục ngang) và Yaw (quay đầu quanh trục đứng) là 3 bậc tự do góc kiểm soát tư thế bay khí động học."
   },
   {
-    id: 16,
-    question: "Khi thực hiện hiệu chuẩn la bàn từ tính (Compass Calibration) cho UAV, thao tác nào sau đây là ĐÚNG?",
-    options: [
-      { key: "A", text: "Thực hiện ở không gian thoáng đãng, cách xa kết cấu sắt thép lớn, trạm biến áp và đường dây điện cao thế" },
-      { key: "B", text: "Đặt máy bay cạnh một khối nam châm vĩnh cửu để tăng độ nhạy từ trường" },
-      { key: "C", text: "Hiệu chuẩn ngay bên trong cabin xe ô tô bọc kim loại kín" },
+    "id": 16,
+    "question": "Khi hiệu chuẩn la bàn từ tính (Compass Calibration) cho UAV, điều kiện môi trường nào sau đây là BẮT BUỘC?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Đứng gần tháp phát sóng viễn thông hoặc trạm biến áp điện 220kV"
+      },
+      {
+        "key": "B",
+        "text": "Khu vực trống trải, cách xa các khối kim loại lớn, bê tông cốt thép và dây điện cao thế"
+      },
+      {
+        "key": "C",
+        "text": "Để UAV ngay trên nắp capo xe ô tô đang nổ máy"
+      },
+      {
+        "key": "D",
+        "text": "Thực hiện trong phòng kín bằng kim loại có che chắn sóng"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "La bàn từ tính rất nhạy cảm với kim loại và từ trường nhân tạo, do đó phải hiệu chuẩn tại nơi thoáng đãng không có dị vật sắt thép."
+    "correctAnswer": "B",
+    "explanation": "La bàn từ tính rất nhạy cảm với từ trường dị thường; kim loại lớn, cốt thép hoặc nguồn điện mạnh sẽ làm sai lệch dữ liệu cảm biến dẫn đến hiện tượng 'Toilet bowl' mất kiểm soát."
   },
   {
-    id: 17,
-    question: "Khái niệm BVLOS trong điều khiển và tác chiến UAV có nghĩa là gì?",
-    options: [
-      { key: "A", text: "Bay ngoài tầm nhìn trực quan của người điều khiển (Beyond Visual Line of Sight)" },
-      { key: "B", text: "Bay tự do không cần người quan sát và không cần trạm điều khiển" },
-      { key: "C", text: "Bay ở độ cao tuyệt đối sát mặt đất dưới 1 mét" },
+    "id": 17,
+    "question": "Kỹ thuật 'Cân bằng động cánh quạt' (Propeller Balancing) nhằm mục đích chính nào sau đây?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Tăng trọng lượng của cánh quạt để máy bay đầm gió hơn"
+      },
+      {
+        "key": "B",
+        "text": "Triệt tiêu độ rung chấn cơ học, bảo vệ vòng bi động cơ và chống rung camera"
+      },
+      {
+        "key": "C",
+        "text": "Đổi màu sắc cánh quạt giúp dễ nhận diện từ xa"
+      },
+      {
+        "key": "D",
+        "text": "Làm giảm tốc độ quay tối đa của động cơ máy bay"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "BVLOS (Beyond Visual Line of Sight) là phương thức bay tầm xa vượt khỏi tầm quan sát mắt thường của kíp điều khiển mặt đất."
+    "correctAnswer": "B",
+    "explanation": "Cánh quạt lệch trọng tâm khi quay ở vận tốc 5.000 - 15.000 vòng/phút sẽ sinh ra lực ly tâm phá hủy bạc đạn động cơ, làm nhiễu cảm biến IMU và hỏng chất lượng hình ảnh."
   },
   {
-    id: 18,
-    question: "Cảm biến đo độ cao bằng sóng Lidar hoặc Sonar gắn dưới bụng UAV thường phát huy hiệu quả tối đa trong tình huống nào?",
-    options: [
-      { key: "A", text: "Hỗ trợ hạ cánh chính xác và bay bám địa hình tầm thấp dưới 10-20 mét" },
-      { key: "B", text: "Đo khoảng cách tới các vệ tinh viễn thông quỹ đạo địa tĩnh" },
-      { key: "C", text: "Thay thế hoàn toàn động cơ đẩy khi bay ở độ cao 1.000 mét" },
+    "id": 18,
+    "question": "Điện áp danh định (Nominal voltage) của một cell pin Lithium Polymer (LiPo) tiêu chuẩn là bao nhiêu?",
+    "options": [
+      {
+        "key": "A",
+        "text": "1.2V"
+      },
+      {
+        "key": "B",
+        "text": "3.7V (đầy 4.2V, lưu kho an toàn 3.85V)"
+      },
+      {
+        "key": "C",
+        "text": "5.0V"
+      },
+      {
+        "key": "D",
+        "text": "12.0V"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Cảm biến sóng quang học/siêu âm tầm gần giúp máy bay đo cự ly chính xác tới mặt đất trong pha hạ cánh và tránh va đập địa hình."
+    "correctAnswer": "B",
+    "explanation": "Một cell pin LiPo tiêu chuẩn có điện áp danh định 3.7V, khi sạc đầy đạt 4.2V và điện áp lưu kho an toàn bảo dưỡng (Storage mode) là 3.80V - 3.85V."
   },
   {
-    id: 19,
-    question: "Khi phát hiện pin UAV bị phồng rộp hoặc nhiệt độ tăng cao bất thường sau chuyến bay, biện pháp xử lý an toàn nhất là gì?",
-    options: [
-      { key: "A", text: "Lập tức ngừng sử dụng, cách ly trong hộp chống cháy chuyên dụng và tuyệt đối không cắm sạc tiếp" },
-      { key: "B", text: "Dùng kim chọc thủng lớp vỏ bọc để xả hơi nóng bên trong ra ngoài" },
-      { key: "C", text: "Cắm sạc xả dòng điện cực đại để ép phẳng bề mặt pin" },
+    "id": 19,
+    "question": "Hiện tượng 'Thất tốc' (Stall) ở UAV cánh bằng xảy ra khi nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Góc tấn của cánh vượt quá góc tấn tới hạn, làm luồng khí tách rời khỏi bề mặt trên của cánh và mất lực nâng"
+      },
+      {
+        "key": "B",
+        "text": "Khi máy bay bay với vận tốc vượt quá tốc độ âm thanh"
+      },
+      {
+        "key": "C",
+        "text": "Khi máy bay hạ cánh chạm bánh xuống đường băng"
+      },
+      {
+        "key": "D",
+        "text": "Khi pin được sạc đầy 100% trước khi bay"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Pin LiPo phồng rộp tiềm ẩn nguy cơ phản ứng nhiệt gây nổ cháy dữ dội; phải cách ly trong túi/thùng chống cháy và loại bỏ đúng kỹ thuật."
+    "correctAnswer": "A",
+    "explanation": "Hiện tượng thất tốc khí động học xảy ra khi góc đón gió (góc tấn) quá lớn hoặc vận tốc bay quá thấp, dòng khí mặt trên cánh bị cuộn xoáy tách rời khiến lực nâng suy giảm đột ngột."
   },
   {
-    id: 20,
-    question: "Tài liệu nào sau đây người chỉ huy và kíp bay UAV BẮT BUỘC phải hoàn thành và lưu trữ sau mỗi ca bay làm nhiệm vụ?",
-    options: [
-      { key: "A", text: "Nhật ký hành trình chuyến bay (Flight Log: thời gian, tọa độ, thông số kỹ thuật và tình trạng thiết bị)" },
-      { key: "B", text: "Bản vẽ thiết kế lại toàn bộ bo mạch điện tử của máy bay" },
-      { key: "C", text: "Hợp đồng mua sắm linh kiện bảo trì mới" },
+    "id": 20,
+    "question": "Khu vực cấm bay (No-Fly Zone - NFZ) đối với thiết bị bay không người lái thường bao gồm các địa bàn nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Sân bay dân dụng, căn cứ quân sự, cơ quan đầu não chính trị và kho tàng trọng yếu quốc gia"
+      },
+      {
+        "key": "B",
+        "text": "Mọi cánh đồng canh tác nông nghiệp ở vùng nông thôn"
+      },
+      {
+        "key": "C",
+        "text": "Khu vực mặt nước trên biển khơi cách bờ trên 20 km"
+      },
+      {
+        "key": "D",
+        "text": "Các công viên công cộng không có người qua lại"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Nhật ký bay ghi lại lịch sử hoạt động, giờ bay của từng cụm pin, động cơ và nhật ký lỗi nhằm bảo đảm an toàn kỹ thuật hàng không."
+    "correctAnswer": "A",
+    "explanation": "Quy định an ninh hàng không và quốc phòng cấm triệt để phương tiện bay không người lái hoạt động trái phép trong bán kính khu vực sân bay, công trình an ninh quốc gia và khu quân sự."
   },
   {
-    id: 21,
-    question: "Ưu điểm nổi bật nhất của dòng UAV cánh bằng (Fixed-wing) so với dòng UAV đa cánh quạt (Multicopter) là gì?",
-    options: [
-      { key: "A", text: "Thời gian hoạt động trên không lâu hơn và tầm bay tác chiến xa hơn đáng kể" },
-      { key: "B", text: "Khả năng đứng yên lơ lửng tại một điểm chính xác trong không gian" },
-      { key: "C", text: "Không cần đường băng hoặc bãi phóng khi cất/hạ cánh" },
+    "id": 21,
+    "question": "Giao thức truyền thông MAVLink (Micro Air Vehicle Link) thường được sử dụng để làm gì trong hệ thống UAV?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Truyền dữ liệu đo xa (Telemetry), lệnh điều khiển và trạng thái giữa vi điều khiển bay và trạm mặt đất GCS"
+      },
+      {
+        "key": "B",
+        "text": "Kết nối mạng xã hội để phát trực tiếp video"
+      },
+      {
+        "key": "C",
+        "text": "Chuyển tiền điện tử giữa các trạm trung chuyển"
+      },
+      {
+        "key": "D",
+        "text": "Điều chỉnh tần số âm thanh của loa phát thanh trên UAV"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Nhờ nguyên lý lực nâng khí động học từ cánh tĩnh, UAV cánh bằng tiết kiệm năng lượng hơn rất nhiều so với việc phải liên tục quay cánh quạt nâng."
+    "correctAnswer": "A",
+    "explanation": "MAVLink là giao thức chuẩn mã nguồn mở cực kỳ nhẹ và tối ưu để đóng gói các bản tin dữ liệu đo xa (vận tốc, độ cao, tọa độ, trạng thái pin) và nhận lệnh từ trạm GCS."
   },
   {
-    id: 22,
-    question: "Dòng UAV VTOL (Vertical Take-Off and Landing) kết hợp những ưu điểm gì giữa hai cấu hình cánh bằng và đa cánh quạt?",
-    options: [
-      { key: "A", text: "Cất/hạ cánh thẳng đứng không cần đường băng và bay hành trình tầm xa với tốc độ cao" },
-      { key: "B", text: "Không cần sử dụng động cơ đẩy và không cần pin tích trữ năng lượng" },
-      { key: "C", text: "Chỉ hoạt động được trong môi trường chân không ngoài khí quyển" },
+    "id": 22,
+    "question": "Trong cấu hình Quadcopter hình chữ X (4 động cơ), chiều quay của các cánh quạt được bố trí như thế nào để triệt tiêu mô-men xoắn?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Tất cả 4 cánh quạt đều quay theo chiều kim đồng hồ (CW)"
+      },
+      {
+        "key": "B",
+        "text": "Hai cánh quạt chéo nhau quay thuận chiều kim đồng hồ (CW), hai cánh chéo còn lại quay ngược chiều kim đồng hồ (CCW)"
+      },
+      {
+        "key": "C",
+        "text": "Hai cánh phía trước đứng yên, hai cánh phía sau quay luân phiên"
+      },
+      {
+        "key": "D",
+        "text": "Các cánh quạt tự do quay theo hướng gió ngẫu nhiên"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "UAV VTOL sử dụng động cơ nâng thẳng đứng khi cất/hạ cánh, sau đó chuyển sang động cơ đẩy ngang để bay như máy bay cánh bằng truyền thống."
+    "correctAnswer": "B",
+    "explanation": "Bố trí 2 cánh quay CW và 2 cánh quay CCW chéo góc nhau tạo ra mô-men phản kháng triệt tiêu lẫn nhau, giúp thân máy bay không bị tự xoay tròn quanh trục đứng."
   },
   {
-    id: 23,
-    question: "Hiệu ứng mặt đất (Ground Effect) tác động như thế nào khi UAV hạ cánh ở độ cao rất sát mặt đất?",
-    options: [
-      { key: "A", text: "Tạo ra một đệm không khí làm tăng lực nâng, khiến UAV có xu hướng bồng bềnh khó tiếp đất" },
-      { key: "B", text: "Hút mạnh UAV đập xuống đất do áp suất chân không" },
-      { key: "C", text: "Làm động cơ quay ngược chiều ngay tức thì" },
+    "id": 23,
+    "question": "Cảm biến đo áp suất tĩnh (Barometer) tích hợp trên bo mạch điều khiển bay có chức năng chính là gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Đo nồng độ oxy hòa tan trong không khí"
+      },
+      {
+        "key": "B",
+        "text": "Xác định độ cao tương đối của UAV so với điểm cất cánh dựa trên áp suất khí quyển"
+      },
+      {
+        "key": "C",
+        "text": "Đo áp suất dầu nhớt bôi trơn động cơ"
+      },
+      {
+        "key": "D",
+        "text": "Đo sức ép của luồng gió thổi vào cánh quạt"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Khi cách mặt đất khoảng cách nhỏ hơn đường kính cánh quạt, luồng khí dội ngược tạo thành đệm khí làm tăng lực nâng (Ground Effect)."
+    "correctAnswer": "B",
+    "explanation": "Cảm biến áp suất khí quyển (Barometer) đo sự thay đổi áp suất không khí theo độ cao giúp giữ độ cao ổn định (Altitude Hold) với sai số chỉ vài chục centimet."
   },
   {
-    id: 24,
-    question: "Chỉ số C-Rating (ví dụ 30C, 50C) trên thông số kỹ thuật pin LiPo của UAV thể hiện điều gì?",
-    options: [
-      { key: "A", text: "Khả năng xả dòng điện cực đại an toàn của pin so với dung lượng danh định" },
-      { key: "B", text: "Số lượng chu kỳ sạc pin tối đa trước khi vứt bỏ" },
-      { key: "C", text: "Nhiệt độ nóng chảy tính bằng độ C của vỏ pin" },
+    "id": 24,
+    "question": "Phương thức tác chiến nào sau đây được coi là biện pháp chế áp mềm (Soft-kill) hiệu quả đối với UAV xâm nhập trái phép?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Chế áp điện tử gây nhiễu tín hiệu điều khiển vô tuyến (Jamming) và đánh lừa tín hiệu định vị vệ tinh (Spoofing)"
+      },
+      {
+        "key": "B",
+        "text": "Bắn pháo cao xạ đạn nổ mảnh tầm thấp"
+      },
+      {
+        "key": "C",
+        "text": "Sử dụng tên lửa phòng không tầm nhiệt dẫn đường quang học"
+      },
+      {
+        "key": "D",
+        "text": "Dùng súng bắn lưới cơ học kết hợp đạn ghém"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "C-Rating là chỉ số tốc độ xả dòng điện cực đại (ví dụ pin 5000mAh xả 30C cho dòng phóng tối đa 150 Ampe)."
+    "correctAnswer": "A",
+    "explanation": "Biện pháp chế áp mềm (Soft-kill) sử dụng xung điện từ gây nhiễu dải tần 2.4GHz/5.8GHz và giả mạo tọa độ GNSS làm UAV mất liên lạc và buộc phải hạ cánh hoặc quay đầu."
   },
   {
-    id: 25,
-    question: "Khi UAV mất tín hiệu định vị vệ tinh GNSS/GPS đột ngột trong khi đang bay, phi công cần phản ứng như thế nào?",
-    options: [
-      { key: "A", text: "Chuyển sang chế độ lái thủ công (Manual/ATTI), quan sát hướng bay và chủ động điều khiển đưa máy bay về" },
-      { key: "B", text: "Buông tay điều khiển và bấm phím tắt nguồn trạm mặt đất ngay" },
-      { key: "C", text: "Gạt cần ga hết cỡ lên tối đa để bay lên tầng bình lưu" },
+    "id": 25,
+    "question": "Hệ thống định vị vệ tinh vi sai RTK (Real-Time Kinematic) mang lại lợi ích vượt trội nào so với định vị GPS thông thường?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Tăng thời gian hoạt động của pin máy bay lên gấp 3 lần"
+      },
+      {
+        "key": "B",
+        "text": "Độ chính xác định vị vị trí đạt tới cấp độ centimet (cm) theo thời gian thực"
+      },
+      {
+        "key": "C",
+        "text": "Cho phép bay dưới nước ngầm và trong hang sâu không có sóng"
+      },
+      {
+        "key": "D",
+        "text": "Loại bỏ hoàn toàn sự cần thiết của động cơ cánh quạt"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Khi mất GNSS, UAV sẽ trôi tự do theo quán tính và gió; phi công phải có kỹ năng lái ATTI/Manual để giữ thăng bằng và lái về an toàn."
+    "correctAnswer": "B",
+    "explanation": "Công nghệ RTK so sánh pha sóng mang tín hiệu vệ tinh giữa trạm Base cố định và trạm Rover trên UAV, triệt tiêu sai số khí quyển và cho độ chính xác định vị tới từng centimet."
   },
   {
-    id: 26,
-    question: "Động cơ điện không chổi than (BLDC - Brushless Motor) trên UAV có ưu thế vượt trội nào so với động cơ có chổi than truyền thống?",
-    options: [
-      { key: "A", text: "Hiệu suất cao, độ bền vượt trội, tỏa nhiệt ít và không bị mài mòn chổi than cơ học" },
-      { key: "B", text: "Tự tạo ra dòng điện xoay chiều mà không cần pin nuôi nguồn" },
-      { key: "C", text: "Trọng lượng nặng hơn gấp 10 lần giúp máy bay đầm gió hơn" },
+    "id": 26,
+    "question": "Hiện tượng 'Ground Effect' (Hiệu ứng mặt đất) tác động như thế nào khi UAV đa cánh bay lơ lửng rất gần bề mặt sàn (dưới 0.5 mét)?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Lực nâng tăng lên và luồng khí xoáy dội ngược từ mặt đất gây tròng trành, khó điều khiển ổn định"
+      },
+      {
+        "key": "B",
+        "text": "Trọng lượng máy bay đột ngột giảm xuống bằng 0"
+      },
+      {
+        "key": "C",
+        "text": "Động cơ bị dừng hoàn toàn do thiếu oxy dưới mặt sàn"
+      },
+      {
+        "key": "D",
+        "text": "Sóng vô tuyến bị triệt tiêu hoàn toàn xuống đất"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Động cơ BLDC dùng từ trường nam châm vĩnh cửu và chuyển mạch điện tử bằng ESC nên không ma sát cơ khí, cho độ tin cậy rất cao."
+    "correctAnswer": "A",
+    "explanation": "Hiệu ứng mặt đất sinh ra do luồng khí rửa (downwash) đập xuống sàn cứng tạo đệm khí áp suất cao, làm lực nâng tăng nhưng luồng xoáy dội lại khiến máy bay chao đảo."
   },
   {
-    id: 27,
-    question: "Dữ liệu Telemetry truyền từ UAV về trạm mặt đất GCS trong thời gian thực thường KHÔNG bao gồm thông số nào?",
-    options: [
-      { key: "A", text: "Số tài khoản ngân hàng và mã PIN cá nhân của người điều khiển" },
-      { key: "B", text: "Tọa độ GPS, độ cao bay, vận tốc, góc nghiêng và điện áp pin" },
-      { key: "C", text: "Chế độ bay hiện tại, trạng thái kết nối và số lượng vệ tinh khóa được" },
+    "id": 27,
+    "question": "Hệ thống ống Pitot (Pitot Tube) trên máy bay không người lái cánh bằng dùng để đo đại lượng nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Tốc độ gió tương đối / Tốc độ dòng khí đối với máy bay (Airspeed)"
+      },
+      {
+        "key": "B",
+        "text": "Độ nhớt của không khí xung quanh"
+      },
+      {
+        "key": "C",
+        "text": "Độ ẩm tuyệt đối trong khoang chứa hàng"
+      },
+      {
+        "key": "D",
+        "text": "Lượng nhiên liệu còn lại trong thùng chứa"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Telemetry là gói dữ liệu đo xa phản ánh trạng thái bay, sức khỏe thiết bị và thông số kỹ thuật của phương tiện."
+    "correctAnswer": "A",
+    "explanation": "Ống Pitot đo chênh lệch giữa áp suất tổng (áp suất động) và áp suất tĩnh để tính toán tốc độ bay thực tế so với khối không khí (Airspeed), thông số sống còn chống thất tốc cánh bằng."
   },
   {
-    id: 28,
-    question: "Kỹ thuật RTK (Real-Time Kinematic) trên UAV trắc địa và trinh sát mang lại lợi ích gì?",
-    options: [
-      { key: "A", text: "Định vị tọa độ không gian chính xác đến từng centimet bằng cách sửa sai lệch vệ tinh theo thời gian thực" },
-      { key: "B", text: "Tăng dung lượng pin lên gấp 3 lần trong lúc bay" },
-      { key: "C", text: "Làm mát động cơ bằng luồng sóng vô tuyến siêu âm" },
+    "id": 28,
+    "question": "Khi bảo quản pin Lithium Polymer (LiPo) của UAV trong thời gian không sử dụng dài ngày (trên 10 ngày), cần xử lý mức điện áp pin như thế nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Sạc căng đầy 100% điện áp 4.2V/cell để sẵn sàng bay"
+      },
+      {
+        "key": "B",
+        "text": "Đưa pin về chế độ điện áp lưu kho an toàn (Storage mode: 3.80V - 3.85V mỗi cell)"
+      },
+      {
+        "key": "C",
+        "text": "Xả kiệt hoàn toàn về 0V để tránh nguy cơ cháy nổ"
+      },
+      {
+        "key": "D",
+        "text": "Ngâm pin vào xô nước muối để làm mát liên tục"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "RTK đo pha sóng mang từ trạm base mặt đất đến UAV, khử sai số tầng điện ly/đối lưu, giúp định vị chính xác mức centimet."
+    "correctAnswer": "B",
+    "explanation": "Lưu trữ pin LiPo ở mức đầy 4.2V làm hóa chất phân rã sinh khí gây phù pin; xả kiệt dưới 3.0V gây chết cell vĩnh viễn. Chế độ Storage 3.85V/cell là ngưỡng bảo vệ tuổi thọ hóa học tối ưu."
   },
   {
-    id: 29,
-    question: "Góc tới (Angle of Attack - AoA) của cánh nâng UAV là góc tạo bởi giữa yếu tố nào?",
-    options: [
-      { key: "A", text: "Đường dây cung cánh (Chord line) và hướng luồng khí tương đối (Relative wind)" },
-      { key: "B", text: "Càng đáp phía trước và bề mặt mặt đất phẳng" },
-      { key: "C", text: "Ống xả động cơ và hướng gió thổi từ phía sau" },
+    "id": 29,
+    "question": "Khái niệm BVLOS trong quy tắc điều khiển bay UAV viết tắt cho cụm từ nào sau đây?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Beyond Visual Line of Sight (Bay ngoài tầm nhìn trực tiếp bằng mắt thường)"
+      },
+      {
+        "key": "B",
+        "text": "Battery Voltage Low Operations Standard"
+      },
+      {
+        "key": "C",
+        "text": "Basic Vertical Landing Optimization Software"
+      },
+      {
+        "key": "D",
+        "text": "Broadband Video Level Optimization Signal"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Góc tới AoA là góc giữa đường thẳng nối mép trước và mép sau cánh với vectơ vận tốc luồng khí tương đối thổi vào cánh."
+    "correctAnswer": "A",
+    "explanation": "BVLOS (Beyond Visual Line of Sight) là phương thức bay ở khoảng cách xa vượt khỏi tầm quan sát trực tiếp bằng mắt thường của phi công, đòi hỏi hệ thống telemetry và an toàn cao."
   },
   {
-    id: 30,
-    question: "Hiện tượng thất tốc (Stall) xảy ra trên máy bay cánh bằng khi nào?",
-    options: [
-      { key: "A", text: "Khi góc tới (AoA) vượt quá góc tới tới hạn, làm luồng khí tách rời khỏi mặt trên cánh khiến lực nâng sụt giảm nghiêm trọng" },
-      { key: "B", text: "Khi máy bay bay với vận tốc vượt quá tốc độ âm thanh" },
-      { key: "C", text: "Khi bình ắc quy được nạp quá 100% dung lượng thiết kế" },
+    "id": 30,
+    "question": "Trong điều kiện thời tiết nào sau đây, người điều khiển BẮT BUỘC phải hoãn chuyến bay hoặc khẩn trương hạ cánh thiết bị?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Trời quang mây tạnh, gió cấp 2, tầm nhìn xa trên 10 km"
+      },
+      {
+        "key": "B",
+        "text": "Khi trời chuẩn bị chuyển mưa dông, có sét, gió giật mạnh và mây đen tích điện tầng thấp"
+      },
+      {
+        "key": "C",
+        "text": "Nhiệt độ ngoài trời ở mức 26 độ C vào buổi sáng"
+      },
+      {
+        "key": "D",
+        "text": "Độ ẩm không khí đạt mức 55% vào mùa thu"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Khi AoA quá lớn, dòng khí bị cuộn xoáy và tách khỏi mặt trên cánh, gây mất lực nâng đột ngột dẫn đến máy bay rơi tự do (thất tốc)."
+    "correctAnswer": "B",
+    "explanation": "Mưa dông kèm gió giật và sét đánh là mối nguy hiểm chí tử với UAV: nước gây chập mạch điện tử, gió giật làm lật máy bay và xung điện tích sét phá hủy toàn bộ linh kiện bay."
   },
   {
-    id: 31,
-    question: "Bộ cảm biến luồng quang học (Optical Flow sensor) dưới bụng UAV hỗ trợ đắc lực nhất trong môi trường nào?",
-    options: [
-      { key: "A", text: "Bay trong nhà hoặc hẻm núi che khuất sóng vệ tinh GPS, giữ vị trí bằng cách phân tích chuyển động bề mặt" },
-      { key: "B", text: "Bay trên mặt nước biển động mạnh vào ban đêm không có trăng" },
-      { key: "C", text: "Bay xuyên qua các đám mây mù dày đặc ở độ cao 3.000 mét" },
+    "id": 31,
+    "question": "Chức năng RTH thông minh (Smart RTH) trên các dòng UAV hiện đại tự động tính toán yếu tố nào để cảnh báo phi công?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Tính toán khoảng cách hiện tại, tốc độ gió ngược và lượng pin cần thiết đủ để bay về an toàn"
+      },
+      {
+        "key": "B",
+        "text": "Tự động gửi email thông báo kết quả cho người quản lý"
+      },
+      {
+        "key": "C",
+        "text": "Tự động tắt nguồn máy bay khi cách mặt đất 100m"
+      },
+      {
+        "key": "D",
+        "text": "Tự động chuyển đổi màu đèn led tín hiệu trên thân vỏ"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Cảm biến Optical Flow chụp và so sánh các khung hình bề mặt sàn liên tục để nhận biết độ dạt ngang khi không có tín hiệu GPS."
+    "correctAnswer": "A",
+    "explanation": "Smart RTH liên tục đối chiếu dung lượng pin khả dụng với năng lượng cần tiêu hao để vượt qua khoảng cách và lực cản gió ngược quay về điểm Home, tự động cảnh báo khi chạm ngưỡng tối thiểu."
   },
   {
-    id: 32,
-    question: "Khái niệm Geofencing (hàng rào địa lý ảo) trên hệ thống phần mềm UAV có tác dụng gì?",
-    options: [
-      { key: "A", text: "Giới hạn phạm vi bán kính và độ cao bay tối đa, ngăn chặn máy bay bay vào khu vực cấm hoặc vượt tầm kiểm soát" },
-      { key: "B", text: "Bắn tia laser phá hủy các chướng ngại vật xung quanh đường bay" },
-      { key: "C", text: "Tự động gửi thông tin chuyến bay lên mạng xã hội" },
+    "id": 32,
+    "question": "Cảm biến quang học cảm biến chướng ngại vật (Obstacle Avoidance Sensors) trên UAV có hạn chế lớn nhất trong điều kiện nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Trong đêm tối thiếu sáng, sương mù dày đặc hoặc bề mặt vật thể phản xạ gương trong suốt"
+      },
+      {
+        "key": "B",
+        "text": "Vào buổi trưa trời nắng trong vắt không một gợn mây"
+      },
+      {
+        "key": "C",
+        "text": "Khi bay ở độ cao 30m so với mặt đất"
+      },
+      {
+        "key": "D",
+        "text": "Khi pin được sạc đầy 100%"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Geofencing tạo ra một lồng rào ảo dựa trên tọa độ GPS, UAV sẽ tự động dừng lại hoặc quay đầu khi chạm vào ranh giới ảo này."
+    "correctAnswer": "A",
+    "explanation": "Cảm biến quang học Stereo Vision dựa trên độ tương phản hình ảnh quang học; bóng tối, bề mặt kính trong suốt hoặc sương mù dày làm cảm biến 'mù' và không nhận diện được vật cản."
   },
   {
-    id: 33,
-    question: "Ống Pitot (Pitot Tube) trang bị trên các dòng UAV cánh bằng dùng để đo thông số gì?",
-    options: [
-      { key: "A", text: "Tốc độ của máy bay so với luồng không khí tương đối (Airspeed)" },
-      { key: "B", text: "Nhiệt độ nóng chảy của cánh quạt máy bay" },
-      { key: "C", text: "Khối lượng nhiên liệu còn lại trong bình chứa" },
+    "id": 33,
+    "question": "Khái niệm 'Tải trọng ích' (Useful Payload) trên UAV được định nghĩa chuẩn xác là gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Tổng trọng lượng của bộ vỏ nhựa bên ngoài máy bay"
+      },
+      {
+        "key": "B",
+        "text": "Khối lượng thiết bị chuyên dụng mang thêm để thực hiện nhiệm vụ (camera, cảm biến, hàng cứu trợ...)"
+      },
+      {
+        "key": "C",
+        "text": "Trọng lượng của cụm pin LiPo cung cấp năng lượng bay"
+      },
+      {
+        "key": "D",
+        "text": "Trọng lượng trạm điều khiển mặt đất GCS"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Ống Pitot đo chênh lệch giữa áp suất toàn phần và áp suất tĩnh để tính toán tốc độ bay thực tế so với luồng khí (Airspeed)."
+    "correctAnswer": "B",
+    "explanation": "Tải trọng ích (Payload) là phần khối lượng khí tài gắn thêm phục vụ trực tiếp cho mục đích nhiệm vụ mà không bao gồm kết cấu thân vỏ và hệ thống động lực cơ bản của UAV."
   },
   {
-    id: 34,
-    question: "Kỹ thuật nhảy tần thích ứng FHSS (Frequency-Hopping Spread Spectrum) trên tay cầm điều khiển RC mang lại ưu điểm gì?",
-    options: [
-      { key: "A", text: "Tự động đổi kênh tần số liên tục hàng trăm lần mỗi giây để chống nhiễu và chống nghe lén tín hiệu" },
-      { key: "B", text: "Gia tăng công suất phát sóng vô tuyến lên gấp 1.000 lần mức quy định" },
-      { key: "C", text: "Tiêu diệt các loại virus máy tính lây nhiễm qua đường không khí" },
+    "id": 34,
+    "question": "Cơ chế 'Nhảy tần thích ứng' (FHSS - Frequency Hopping Spread Spectrum) trên tay điều khiển UAV có tác dụng chủ yếu gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Chống can nhiễu sóng vô tuyến và tăng tính bảo mật, chống chế áp điện tử thông thường"
+      },
+      {
+        "key": "B",
+        "text": "Tăng âm lượng loa cảnh báo gắn trên tay cầm"
+      },
+      {
+        "key": "C",
+        "text": "Giúp sạc pin nhanh gấp 2 lần cho bộ phát"
+      },
+      {
+        "key": "D",
+        "text": "Tự động phát hiện kim loại màu dưới mặt đất"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "FHSS truyền tín hiệu bằng cách nhảy ngẫu nhiên giữa các tần số trong băng tần, hạn chế tối đa nguy cơ bị phá sóng hoặc nghẽn kênh."
+    "correctAnswer": "A",
+    "explanation": "FHSS liên tục thay đổi tần số phát tín hiệu hàng trăm lần mỗi giây theo chuỗi giả ngẫu nhiên, giúp tín hiệu không bị nghẽn do can nhiễu băng hẹp và chống phá sóng hiệu quả."
   },
   {
-    id: 35,
-    question: "Gimbal 3 trục trên UAV điều khiển chống rung theo các trục chuyển động nào trong không gian?",
-    options: [
-      { key: "A", text: "Pitch (nghiêng lên/xuống), Roll (nghiêng trái/phải), Yaw (xoay ngang)" },
-      { key: "B", text: "Độ cao, độ sâu và độ dài thân vỏ" },
-      { key: "C", text: "Nhiệt độ, độ ẩm và áp suất khí quyển" },
+    "id": 35,
+    "question": "Khi phát hiện UAV bay chệch quỹ đạo mất kiểm soát hướng (Flyaway), hành động khẩn cấp đầu tiên của người chỉ huy bay là gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Chuyển sang chế độ khẩn cấp (Emergency Cut-off / RTH), xác định tọa độ cuối và cảnh báo an toàn mặt đất"
+      },
+      {
+        "key": "B",
+        "text": "Tiếp tục đứng chờ máy bay tự hết pin rơi xuống"
+      },
+      {
+        "key": "C",
+        "text": "Tắt nguồn trạm mặt đất GCS ngay lập tức và rời vị trí"
+      },
+      {
+        "key": "D",
+        "text": "Ném vật thể kim loại lên trời để chặn đường bay"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Gimbal 3 trục khử rung lắc trên 3 trục quay tự do cơ bản của khí động học: Pitch, Roll và Yaw, đảm bảo khung hình ổn định tuyệt đối."
+    "correctAnswer": "A",
+    "explanation": "Quy trình khẩn nguy yêu cầu kích hoạt lệnh cắt động cơ hoặc ép RTH nếu khả dụng, ghi nhận tọa độ GPS telemetry cuối cùng và phát cảnh báo cho các lực lượng dưới mặt đất."
   },
   {
-    id: 36,
-    question: "Tại sao không nên xả cạn kiệt điện áp pin LiPo dưới mức 3.0V đến 3.2V trên mỗi cell?",
-    options: [
-      { key: "A", text: "Làm tổn thương hóa học vĩnh viễn cấu trúc phân tử pin, làm phồng pin và mất khả năng tích điện" },
-      { key: "B", text: "Làm cánh quạt UAV quay ngược chiều ngay trên không" },
-      { key: "C", text: "Làm thay đổi tọa độ kinh độ và vĩ độ của vệ tinh GPS" },
+    "id": 36,
+    "question": "Hiện tượng suy giảm tầm bay và thời lượng pin của UAV trong môi trường nhiệt độ quá lạnh (dưới 0 độ C) chủ yếu do nguyên nhân nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Các phản ứng hóa học trong pin LiPo bị chậm lại, nội trở tăng vọt làm điện áp sụt nhanh dưới tải"
+      },
+      {
+        "key": "B",
+        "text": "Không khí lạnh quá đặc làm động cơ không thể quay được"
+      },
+      {
+        "key": "C",
+        "text": "Sóng vô tuyến bị đóng băng trong không khí"
+      },
+      {
+        "key": "D",
+        "text": "Tín hiệu vệ tinh GPS không thể truyền qua lớp không khí lạnh"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Xả quá sâu dưới 3.0V/cell gây thoái hóa điện cực và kết tủa kim loại Lithium, phá hủy cấu trúc pin và gây nguy hiểm cháy nổ khi sạc lại."
+    "correctAnswer": "A",
+    "explanation": "Nhiệt độ âm làm tăng điện trở trong của dung dịch điện phân trong pin LiPo, khiến pin sụt áp tức thời ngay khi kéo ga cao, có thể gây ngắt nguồn đột ngột giữa không trung."
   },
   {
-    id: 37,
-    question: "Trước khi bay trong khu vực có nhiệt độ môi trường lạnh dưới 0°C, thao tác chuẩn bị pin nào sau đây là quan trọng nhất?",
-    options: [
-      { key: "A", text: "Ủ ấm pin lên nhiệt độ khoảng 20°C - 25°C trước khi cất cánh và bay thận trọng" },
-      { key: "B", text: "Ngâm pin vào nước đá để đông cứng dung dịch điện phân" },
-      { key: "C", text: "Xả sạch toàn bộ điện tích của pin về 0 Volts" },
+    "id": 37,
+    "question": "Loại cánh quạt có bước ren cánh lớn (High Pitch Propeller) thường mang lại đặc tính bay nào cho UAV?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Cho tốc độ bay tối đa cao hơn nhưng tiêu tốn dòng điện lớn hơn khi tăng tốc ban đầu"
+      },
+      {
+        "key": "B",
+        "text": "Giúp máy bay tiết kiệm pin tối đa khi bay treo tại chỗ"
+      },
+      {
+        "key": "C",
+        "text": "Làm máy bay hoàn toàn không phát ra tiếng ồn khí động"
+      },
+      {
+        "key": "D",
+        "text": "Làm giảm trọng lượng tổng thể của cụm động cơ"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Ở nhiệt độ quá lạnh, trở kháng trong của pin LiPo tăng vọt làm sụt áp đột ngột dẫn đến mất nguồn trên không; cần làm ấm pin trước khi bay."
+    "correctAnswer": "A",
+    "explanation": "Bước cánh (Pitch) càng lớn thì mỗi vòng quay đẩy máy bay đi được quãng đường dài hơn (vận tốc lớn), nhưng đòi hỏi mô-men xoắn cao và tiêu hao điện năng dòng lớn."
   },
   {
-    id: 38,
-    question: "Tác động nguy hiểm nhất của hiện tượng sương mù dày đặc đối với thiết bị UAV là gì?",
-    options: [
-      { key: "A", text: "Hơi ẩm ngưng tụ gây chập mạch điện tử bo mạch và làm mờ thấu kính camera quan sát" },
-      { key: "B", text: "Làm trọng lượng máy bay tăng gấp 100 lần ngay lập tức" },
-      { key: "C", text: "Làm sóng radio biến đổi thành tia tử ngoại" },
+    "id": 38,
+    "question": "Công nghệ camera nhiệt (Thermal Imaging Camera) trên UAV phát hiện đối tượng dựa trên nguyên lý vật lý nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Đo bức xạ nhiệt hồng ngoại phát ra từ mọi vật thể có nhiệt độ trên độ không tuyệt đối"
+      },
+      {
+        "key": "B",
+        "text": "Chiếu tia X-quang xuyên thấu từ trên cao xuống mặt đất"
+      },
+      {
+        "key": "C",
+        "text": "Thu nhận sóng âm thanh siêu âm phát ra từ động cơ đối phương"
+      },
+      {
+        "key": "D",
+        "text": "Phát hiện màu sắc phản quang phủ trên trang phục"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Sương mù là các hạt nước lơ lửng, khi luồng gió cánh quạt thổi vào sẽ làm ngưng tụ nước trên mạch điện hở gây đoản mạch và hỏng hóc."
+    "correctAnswer": "A",
+    "explanation": "Cảm biến vi bức xạ nhiệt (Microbolometer) thu nhận bức xạ hồng ngoại bước sóng 8 - 14 µm phát ra từ nguồn nhiệt mục tiêu, tạo ảnh nhiệt rõ nét bất kể ngày đêm hay khói bụi mù mịt."
   },
   {
-    id: 39,
-    question: "Cảm biến áp suất khí quyển (Barometer) tích hợp trên Flight Controller có công dụng chính là gì?",
-    options: [
-      { key: "A", text: "Đo áp suất không khí xung quanh để xác định độ cao tương đối của UAV so với điểm cất cánh" },
-      { key: "B", text: "Dự báo chính xác thời gian xảy ra động đất và núi lửa" },
-      { key: "C", text: "Đo nồng độ khí Oxy bên trong khoang chứa pin" },
+    "id": 39,
+    "question": "Khi lập kế hoạch đường bay tự động (Waypoints Mission), yếu tố an toàn quan trọng nhất về hành lang bay là gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Độ cao giữa các điểm chuyển hướng, vùng giao thoa địa hình và giới hạn tầm sóng liên lạc"
+      },
+      {
+        "key": "B",
+        "text": "Tên gọi của các điểm mốc trên bản đồ số"
+      },
+      {
+        "key": "C",
+        "text": "Số lượng ảnh chụp thử nghiệm trên điện thoại của phi công"
+      },
+      {
+        "key": "D",
+        "text": "Màu sắc của các đường vạch biểu diễn trên màn hình GCS"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Khí áp kế (Barometer) tính toán độ cao thông qua sự thay đổi áp suất không khí theo phương thẳng đứng với độ nhạy cao."
+    "correctAnswer": "A",
+    "explanation": "Hành lang bay tự động phải tính toán trần cao an toàn vượt chướng ngại vật địa hình, vùng khuất sóng vô tuyến đồi núi và thời lượng pin quay về từ điểm xa nhất."
   },
   {
-    id: 40,
-    question: "Trong điều khiển bay 4 cánh quạt (Quadcopter), chuyển động quay quanh trục đứng (Yaw) được thực hiện như thế nào?",
-    options: [
-      { key: "A", text: "Thay đổi tốc độ tương đối giữa cặp cánh quay thuận (CW) và cặp cánh quay nghịch (CCW) để tạo chênh lệch mô-men xoắn" },
-      { key: "B", text: "Nghiêng toàn bộ thân máy bay về phía trước 90 độ" },
-      { key: "C", text: "Tắt hoàn toàn 2 động cơ đối diện và rơi tự do" },
+    "id": 40,
+    "question": "Thiết bị Gimbal ổn định hình ảnh trên UAV hoạt động dựa trên cơ chế phản hồi nào để loại bỏ rung lắc?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Cảm biến con quay góc IMU hồi tiếp tín hiệu đến các động cơ không chổi than mini để bù trừ tức thời"
+      },
+      {
+        "key": "B",
+        "text": "Hệ thống lò xo cơ khí và dầu giảm xóc thụ động hoàn toàn"
+      },
+      {
+        "key": "C",
+        "text": "Phần mềm cắt ghép và làm mịn hình ảnh nhân tạo trên máy chủ"
+      },
+      {
+        "key": "D",
+        "text": "Lực hút nam châm vĩnh cửu gắn ở đế camera"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Quadcopter khử mô-men xoắn bằng 2 cánh CW và 2 cánh CCW. Khi tăng tốc một cặp và giảm tốc cặp còn lại, mô-men dư thừa sẽ xoay thân UAV."
+    "correctAnswer": "A",
+    "explanation": "Gimbal 3 trục sử dụng cảm biến IMU riêng biệt đo góc rung lắc với tần số hàng ngàn Hz và điều khiển 3 mô-tơ bước/brushless vi sai để giữ cân bằng quang học tuyệt đối."
   },
   {
-    id: 41,
-    question: "Trong quy định quản lý không phận, khoảng cách an toàn tối thiểu UAV cần giữ đối với đám đông người ngoài trời là bao nhiêu?",
-    options: [
-      { key: "A", text: "Không được bay trực tiếp phía trên đám đông người và giữ khoảng cách nằm ngang an toàn ít nhất 30-50 mét" },
-      { key: "B", text: "Được phép bay sát cách đỉnh đầu người dân 0.5 mét" },
-      { key: "C", text: "Không có quy định giới hạn khoảng cách" },
+    "id": 41,
+    "question": "Tại sao việc cài đặt đúng thông số 'Geofence' (Hàng rào địa lý ảo) là quy tắc an toàn quan trọng trong tác chiến UAV?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Ngăn chặn máy bay vô tình bay vượt ra ngoài khu vực tác chiến cho phép hoặc bay vào vùng cấm"
+      },
+      {
+        "key": "B",
+        "text": "Giúp máy bay tiết kiệm pin bằng cách tự động tắt động cơ"
+      },
+      {
+        "key": "C",
+        "text": "Tăng khoảng cách truyền hình ảnh lên gấp đôi"
+      },
+      {
+        "key": "D",
+        "text": "Làm giảm nhiệt độ của pin trong suốt chuyến bay"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Tuyệt đối không bay trên đầu người để phòng ngừa rủi ro cơ khí hoặc mất điện rơi tự do gây thương tích nguy hiểm."
+    "correctAnswer": "A",
+    "explanation": "Hàng rào ảo Geofence thiết lập ranh giới hình trụ hoặc đa giác: khi UAV chạm ranh giới, hệ thống tự động phanh lại và không cho phép bay tiếp để bảo vệ an ninh và tránh thất lạc."
   },
   {
-    id: 42,
-    question: "Tần số vô tuyến 5.8 GHz thường được ưu tiên dùng cho đường truyền nào trên UAV chuyên dụng?",
-    options: [
-      { key: "A", text: "Truyền hình ảnh FPV trực tiếp độ nét cao với độ trễ cực thấp" },
-      { key: "B", text: "Đo độ sâu đáy sông ngòi dưới bùn đất" },
-      { key: "C", text: "Gửi tín hiệu cấp cứu xuyên qua lòng đất" },
+    "id": 42,
+    "question": "Trong hệ thống điện động lực học của UAV, ký hiệu '4S' hoặc '6S' in trên vỏ pin LiPo có ý nghĩa kỹ thuật gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Số lượng cell pin mắc nối tiếp (Series) với nhau trong bộ pin (4S = 14.8V, 6S = 22.2V danh định)"
+      },
+      {
+        "key": "B",
+        "text": "Thời gian bay tối đa tính bằng số giây (Seconds)"
+      },
+      {
+        "key": "C",
+        "text": "Cấp độ chống nước của vỏ bảo vệ pin"
+      },
+      {
+        "key": "D",
+        "text": "Số lượng cánh quạt tương ứng có thể gắn vào động cơ"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Băng tần 5.8 GHz có bước sóng ngắn, băng thông rộng cho phép truyền tải luồng video chất lượng cao và độ trễ mili-giây."
+    "correctAnswer": "A",
+    "explanation": "Ký tự 'S' viết tắt của 'Series' (mắc nối tiếp): 1 cell = 3.7V, pin 4S gồm 4 cell mắc nối tiếp (14.8V), pin 6S gồm 6 cell mắc nối tiếp (22.2V danh định)."
   },
   {
-    id: 43,
-    question: "Khi sạc pin LiPo cho UAV, chế độ 'Balance Charge' (Sạc cân bằng) có vai trò thiết yếu gì?",
-    options: [
-      { key: "A", text: "Điều chỉnh điện áp từng cell pin riêng biệt về mức điện áp bằng nhau (4.20V/cell) để đảm bảo an toàn và tuổi thọ" },
-      { key: "B", text: "Tăng trọng lượng của thỏi pin để chống gió thổi bay" },
-      { key: "C", text: "Nén kích thước thể tích pin nhỏ lại một nửa" },
+    "id": 43,
+    "question": "Khi điều khiển UAV bằng tay (Manual mode / Acro mode), điều gì sẽ xảy ra nếu phi công thả tay khỏi các cần điều khiển (Gimbals)?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Máy bay giữ nguyên góc nghiêng tư thế hiện tại và tiếp tục di chuyển, không tự động cân bằng lại"
+      },
+      {
+        "key": "B",
+        "text": "Máy bay tự động phanh gấp và đứng yên lơ lửng tại chỗ"
+      },
+      {
+        "key": "C",
+        "text": "Máy bay lập tức kích hoạt tính năng RTH tự quay về"
+      },
+      {
+        "key": "D",
+        "text": "Động cơ tự động ngắt nguồn và rơi tự do"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Sạc cân bằng kiểm tra từng cell qua dây cáp balance, nạp đều từng cell tránh cell bị quá áp bốc cháy hoặc cell non áp gây sụt nguồn."
+    "correctAnswer": "A",
+    "explanation": "Trong chế độ thuần cơ khí Acro/Manual, hệ thống tự cân bằng góc bị tắt; máy bay duy trì tốc độ quay góc và tư thế nghiêng hiện tại, đòi hỏi phi công phải liên tục điều khiển để giữ thăng bằng."
   },
   {
-    id: 44,
-    question: "Tình huống nào sau đây bắt buộc phi công chỉ huy phải thực hiện hạ cánh khẩn cấp (Emergency Landing) ngay lập tức?",
-    options: [
-      { key: "A", text: "UAV rung lắc dữ dội bất thường, cảnh báo pin sụt áp mức báo động đỏ hoặc phát hiện khói bốc ra từ thân vỏ" },
-      { key: "B", text: "Khi phát hiện một cánh chim bay cách máy bay 200 mét" },
-      { key: "C", text: "Khi tín hiệu đồng hồ trạm mặt đất chỉ tròn đúng 12 giờ trưa" },
+    "id": 44,
+    "question": "Hiện tượng đóng băng bề mặt cánh (Icing) khi UAV bay qua tầng mây lạnh có độ ẩm cao gây ra nguy cơ gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Làm biến dạng biên dạng khí động học của cánh, tăng vọt trọng lượng máy bay và gây thất tốc rơi máy bay"
+      },
+      {
+        "key": "B",
+        "text": "Làm cho máy bay bay nhanh hơn do bề mặt cánh trơn láng hơn"
+      },
+      {
+        "key": "C",
+        "text": "Làm pin bay được lâu hơn do nhiệt độ làm mát hiệu quả"
+      },
+      {
+        "key": "D",
+        "text": "Tăng độ phân giải cho camera trinh sát"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Các dấu hiệu rung chấn cơ khí nặng, cháy chập hoặc tụt áp tới hạn đe dọa trực tiếp khả năng duy trì lực nâng, phải hạ cánh khẩn cấp."
+    "correctAnswer": "A",
+    "explanation": "Băng bám phá vỡ hình dạng profile khí động học của cánh và cánh quạt, làm triệt tiêu lực nâng, tăng lực cản và tải trọng vượt mức nâng của động cơ dẫn tới rơi tự do."
   },
   {
-    id: 45,
-    question: "Thao tác gắn cánh quạt cho UAV đa cánh (Multicopter) cần tuân thủ nguyên tắc cốt tử nào?",
-    options: [
-      { key: "A", text: "Gắn đúng chiều quay cánh thuận (CW) và cánh nghịch (CCW) khớp với chiều quay thiết kế của từng động cơ" },
-      { key: "B", text: "Gắn tất cả các cánh quay cùng một chiều duy nhất" },
-      { key: "C", text: "Lắp cánh lỏng lẻo không cần siết ốc để cánh tự do di chuyển" },
+    "id": 45,
+    "question": "Hệ thống truyền dữ liệu telemetry giữa UAV và trạm mặt đất GCS thường cung cấp những thông tin sống còn nào?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Tọa độ GPS, độ cao, vận tốc bay, điện áp pin, dòng tiêu thụ và chất lượng sóng vô tuyến"
+      },
+      {
+        "key": "B",
+        "text": "Danh bạ điện thoại của phi công điều khiển"
+      },
+      {
+        "key": "C",
+        "text": "Dung lượng bộ nhớ trống trên máy tính trạm GCS"
+      },
+      {
+        "key": "D",
+        "text": "Tên hãng sản xuất thẻ nhớ gắn trong camera"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Lắp sai chiều cánh quạt sẽ tạo ra lực ấn máy bay xuống đất thay vì nâng lên, hoặc làm máy bay mất kiểm soát xoay tròn dữ dội."
+    "correctAnswer": "A",
+    "explanation": "Bản tin đo xa Telemetry cập nhật liên tục các tham số trạng thái khí tài theo thời gian thực để phi công và chỉ huy nắm bắt tình trạng kỹ thuật và đưa ra quyết định xử lý kịp thời."
   },
   {
-    id: 46,
-    question: "Hiện tượng can thiệp chế áp điện tử (GPS Spoofing) gây nguy cơ gì cho UAV đang tác chiến?",
-    options: [
-      { key: "A", text: "Phát tín hiệu tọa độ giả mạo khiến UAV hiểu sai vị trí thực tế và có thể bị dẫn dụ hạ cánh trái phép" },
-      { key: "B", text: "Làm nóng chảy toàn bộ kim loại trên thân vỏ máy bay trong 1 giây" },
-      { key: "C", text: "Biến đổi động cơ điện thành động cơ đốt trong chạy dầu" },
+    "id": 46,
+    "question": "Phương pháp cất cánh và hạ cánh thẳng đứng (VTOL - Vertical Take-Off and Landing) mang lại ưu thế vượt trội gì cho máy bay không người lái cánh bằng?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Không cần đường băng dài hoặc máy phóng/lưới thu hồi, triển khai linh hoạt trên mọi địa hình hẹp"
+      },
+      {
+        "key": "B",
+        "text": "Hoàn toàn không cần sử dụng năng lượng điện hay nhiên liệu"
+      },
+      {
+        "key": "C",
+        "text": "Có khả năng tàng hình trước mọi loại radar đối phương"
+      },
+      {
+        "key": "D",
+        "text": "Cho phép máy bay bay lặn dưới mặt nước biển"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "GPS Spoofing phát sóng giả mạo vệ tinh với công suất mạnh hơn tín hiệu thật, làm lệch hướng dẫn đường tự động của máy bay."
+    "correctAnswer": "A",
+    "explanation": "Cấu hình lai VTOL kết hợp cánh nâng thẳng đứng để cất/hạ cánh linh hoạt trong không gian chật hẹp (rừng núi, tàu thuyền) và cánh bằng cố định để hành trình tầm xa tốc độ cao."
   },
   {
-    id: 47,
-    question: "Chỉ số KV trên thông số động cơ không chổi than (ví dụ: 1000KV, 2300KV) biểu thị thông số gì?",
-    options: [
-      { key: "A", text: "Số vòng quay trên một phút (RPM) của động cơ trên mỗi Volt điện áp cấp vào khi không tải" },
-      { key: "B", text: "Khối lượng tính bằng Kilôgam của động cơ" },
-      { key: "C", text: "Khoảng cách truyền sóng tối đa tính bằng Kilômét" },
+    "id": 47,
+    "question": "Bộ cảm biến dòng điện và điện áp (Power Module / Current Sensor) trên bo mạch điều khiển bay có nhiệm vụ gì?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Đo lường chính xác lượng điện áp và dòng xả thời gian thực để tính toán dung lượng pin còn lại (mAh)"
+      },
+      {
+        "key": "B",
+        "text": "Tăng áp suất không khí trong khoang điện tử"
+      },
+      {
+        "key": "C",
+        "text": "Thay đổi màu sắc đèn chiếu sáng cảnh báo ban đêm"
+      },
+      {
+        "key": "D",
+        "text": "Phát xung âm thanh xua đuổi chim bay gần máy bay"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "KV là hệ số vận tốc vòng quay (RPM/Volt); số KV càng cao thì động cơ quay càng nhanh nhưng mô-men xoắn kéo cánh quạt lớn sẽ giảm."
+    "correctAnswer": "A",
+    "explanation": "Mô-đun nguồn cung cấp nguồn 5V ổn định cho Flight Controller và cảm biến dòng/áp liên tục để bộ vi xử lý tính toán chính xác phần trăm dung lượng pin còn lại."
   },
   {
-    id: 48,
-    question: "Để lưu trữ pin LiPo an toàn khi không sử dụng trong thời gian dài (trên 1-2 tuần), cần đưa điện áp pin về mức nào (Storage Mode)?",
-    options: [
-      { key: "A", text: "Khoảng 3.80V đến 3.85V trên mỗi cell (tương đương 40% - 50% dung lượng)" },
-      { key: "B", text: "Sạc đầy 100% căng điện áp 4.35V/cell và cất tủ kín" },
-      { key: "C", text: "Xả cạn kiệt về 0V" },
+    "id": 48,
+    "question": "Khi tiếp cận khu vực có nguy cơ bị chế áp điện tử mạnh, biện pháp kỹ thuật nào giúp tăng khả năng sinh tồn cho UAV trinh sát?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Bay theo chế độ tự động ngắt kết nối vô tuyến (Radio Silence) dựa trên hệ thống dẫn đường quán tính (INS)"
+      },
+      {
+        "key": "B",
+        "text": "Tăng tối đa công suất phát hình ảnh analog không mã hóa"
+      },
+      {
+        "key": "C",
+        "text": "Hạ độ cao xuống sát mặt đất và bật còi hú liên tục"
+      },
+      {
+        "key": "D",
+        "text": "Bật đèn chiếu sáng công suất lớn để làm lóa mắt thiết bị áp chế"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Mức điện áp 3.85V/cell là trạng thái hóa học ổn định nhất của pin LiPo, giảm thiểu phân rã chất điện phân và chống hiện tượng tự phồng."
+    "correctAnswer": "A",
+    "explanation": "Chế độ im lặng vô tuyến (Radio Silence) tắt toàn bộ máy phát sóng và bay tự động theo lộ trình định sẵn bằng hệ dẫn đường quán tính INS giúp triệt tiêu nguy cơ bị định vị và vô hiệu hóa đòn phá sóng."
   },
   {
-    id: 49,
-    question: "Thiết bị truyền phát nhận diện từ xa Remote ID gắn trên UAV có công dụng chủ yếu là gì?",
-    options: [
-      { key: "A", text: "Phát quảng bá định danh, tọa độ vị trí và độ cao của UAV cho cơ quan quản lý không phận giám sát an ninh" },
-      { key: "B", text: "Tự động tắt động cơ của tất cả máy bay lạ xung quanh" },
-      { key: "C", text: "Tăng tốc độ truyền tải video lên gấp 10 lần" },
+    "id": 49,
+    "question": "Khi thực hiện hạ cánh khẩn cấp trên mặt nước đối với UAV không có tính năng chống nước chuyên dụng, điều gì sẽ xảy ra?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Nước ngấm gây đoản mạch chập cháy linh kiện điện tử, hỏng pin LiPo và chìm hoàn toàn khí tài"
+      },
+      {
+        "key": "B",
+        "text": "Máy bay tự động chuyển sang chế độ xuồng cao tốc bơi về bờ"
+      },
+      {
+        "key": "C",
+        "text": "Hệ thống làm mát bằng nước giúp tăng gấp đôi công suất động cơ"
+      },
+      {
+        "key": "D",
+        "text": "Máy bay tự động nạp lại năng lượng từ sóng biển"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Remote ID là 'biển số xe số' của UAV, liên tục phát sóng Bluetooth/Wi-Fi cung cấp vị trí và danh tính để quản lý không phận an toàn."
+    "correctAnswer": "A",
+    "explanation": "Nước dẫn điện gây đoản mạch bảng mạch điện tử cao áp, làm oxy hóa tế bào pin LiPo gây cháy nổ và làm mất hoàn toàn phương tiện bay nếu không có túi phao cứu hộ."
   },
   {
-    id: 50,
-    question: "Yếu tố khí tượng nào sau đây là chỉ dấu nguy hiểm hàng đầu buộc phải đình chỉ ngay lập tức các chuyến bay UAV?",
-    options: [
-      { key: "A", text: "Mây dông vũ tích (Cumulonimbus), có sấm sét, gió giật cục bộ và mưa đá diện rộng" },
-      { key: "B", text: "Trời quang mây tạnh, gió nhẹ cấp 1 và tầm nhìn trên 10 km" },
-      { key: "C", text: "Nhiệt độ ngoài trời ban ngày 26 độ C" },
+    "id": 50,
+    "question": "Đám mây dông tích điện Cumulonimbus (CB) sinh ra những hiện tượng thời tiết nguy hiểm nào đối với hoạt động của UAV?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Dòng khí giáng (Microburst) cực mạnh, nhiễu động dữ dội, sét đánh và mưa đá phá hủy khí tài bay"
+      },
+      {
+        "key": "B",
+        "text": "Gió lặng như tờ và ánh sáng dịu mát giúp camera thu hình rõ nét"
+      },
+      {
+        "key": "C",
+        "text": "Tăng cường độ bắt sóng vệ tinh định vị lên gấp 3 lần"
+      },
+      {
+        "key": "D",
+        "text": "Tạo luồng khí nâng êm ái giúp máy bay bay không tốn pin"
+      }
     ],
-    correctAnswer: "A",
-    explanation: "Đám mây dông tích điện Cumulonimbus sinh ra dòng khí đi xuống (microburst) cực mạnh, sét đánh và mưa đá phá hủy khí tài bay ngay lập tức."
+    "correctAnswer": "A",
+    "explanation": "Đám mây dông tích điện Cumulonimbus sinh ra dòng khí đi xuống (microburst) cực mạnh, sét đánh và mưa đá phá hủy khí tài bay ngay lập tức."
   }
 ];
 
-// Thời gian thi chuẩn: 20 phút (= 1200 giây)
-export const EXAM_DURATION_MINUTES = 20;
+// Thời gian thi chuẩn: 25 phút (= 1500 giây)
+export const EXAM_DURATION_MINUTES = 25;
 
-// Số lượng câu hỏi chuẩn trong 1 đề thi: 20 câu
-export const EXAM_QUESTION_COUNT = 20;
+// Số lượng câu hỏi chuẩn trong 1 đề thi: 30 câu
+export const EXAM_QUESTION_COUNT = 30;
 
 /**
- * Hàm chọn ngẫu nhiên N câu hỏi từ ngân hàng tổng số câu hỏi (mặc định 20 câu).
+ * Hàm chọn ngẫu nhiên N câu hỏi từ ngân hàng tổng số câu hỏi (mặc định 30 câu).
  * Áp dụng thuật toán xáo trộn Fisher-Yates shuffle chuẩn, đảm bảo tính phân phối đều và công bằng.
  */
 export function selectRandomQuestions(sourcePool: Question[], count: number = EXAM_QUESTION_COUNT): Question[] {
@@ -594,11 +1246,10 @@ export function selectRandomQuestions(sourcePool: Question[], count: number = EX
   // Gán lại số thứ tự hiển thị đề thi từ 1 đến N nhưng vẫn giữ nguyên dữ liệu và id gốc
   return selected.map((q, index) => ({
     ...q,
-    // ID dùng cho đề thi này (1, 2, ..., 20)
+    // ID dùng cho đề thi này (1, 2, ..., 30)
     id: index + 1,
     // Lưu lại ID gốc trong ngân hàng để tra cứu
     originalBankId: q.id,
     firestoreId: q.firestoreId
   }));
 }
-

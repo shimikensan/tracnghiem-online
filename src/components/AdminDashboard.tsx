@@ -164,7 +164,8 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
         options: editingQuestion.options || [
           { key: 'A', text: '' },
           { key: 'B', text: '' },
-          { key: 'C', text: '' }
+          { key: 'C', text: '' },
+          { key: 'D', text: '' }
         ],
         correctAnswer: editingQuestion.correctAnswer || 'A',
         explanation: editingQuestion.explanation || '',
@@ -470,7 +471,8 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
                     options: [
                       { key: 'A', text: '' },
                       { key: 'B', text: '' },
-                      { key: 'C', text: '' }
+                      { key: 'C', text: '' },
+                      { key: 'D', text: '' }
                     ],
                     correctAnswer: 'A',
                     explanation: ''
@@ -521,20 +523,20 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
               </div>
               <div className="text-xs">
                 <div className="font-bold text-white flex items-center gap-2">
-                  <span>Cơ chế đề thi: Tự động chọn ngẫu nhiên 20 câu hỏi</span>
+                  <span>Cơ chế đề thi: Tự động chọn ngẫu nhiên 30 câu hỏi</span>
                   <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-semibold">
                     Đang kích hoạt
                   </span>
                 </div>
                 <p className="text-slate-300 mt-0.5">
-                  Mỗi lượt làm bài của thí sinh sẽ được hệ thống bốc ngẫu nhiên <strong>20 câu hỏi</strong> trong tổng số <strong>{questions.length} câu</strong> của ngân hàng dữ liệu để tạo đề thi riêng biệt.
+                  Mỗi lượt làm bài của thí sinh sẽ được hệ thống bốc ngẫu nhiên <strong>30 câu hỏi</strong> trong tổng số <strong>{questions.length} câu</strong> của ngân hàng dữ liệu để tạo đề thi riêng biệt (Thời gian: 25 phút).
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
               <span className="text-xs text-slate-300 font-mono px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700/60">
-                Quy mô đề: <strong className="text-sky-300">{questions.length > 0 ? Math.min(20, questions.length) : 0} / {questions.length}</strong> câu
+                Quy mô đề: <strong className="text-sky-300">{questions.length > 0 ? Math.min(30, questions.length) : 0} / {questions.length}</strong> câu
               </span>
             </div>
           </div>
@@ -907,13 +909,13 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
                 />
               </div>
 
-              {/* Options A, B, C */}
+              {/* Options A, B, C, D */}
               <div className="space-y-3">
                 <label className="block text-slate-300 font-semibold">
                   Các phương án trả lời & Chọn đáp án đúng <span className="text-rose-400">*</span>
                 </label>
 
-                {['A', 'B', 'C'].map((optKey, idx) => {
+                {['A', 'B', 'C', 'D'].map((optKey, idx) => {
                   const currentOpt = editingQuestion.options?.find(o => o.key === optKey) || { key: optKey as any, text: '' };
                   const isCorrect = editingQuestion.correctAnswer === optKey;
 
@@ -1025,7 +1027,8 @@ export const AdminDashboard: React.FC<Props> = ({ onBackToExam, onOpenFirebaseCo
     "options": [
       { "key": "A", "text": "Phương án A" },
       { "key": "B", "text": "Phương án B" },
-      { "key": "C", "text": "Phương án C" }
+      { "key": "C", "text": "Phương án C" },
+      { "key": "D", "text": "Phương án D" }
     ],
     "correctAnswer": "A",
     "explanation": "Lời giải thích (tùy chọn)"

@@ -124,7 +124,7 @@ export const QuizScreen: React.FC<Props> = ({
                   {candidate.rank}
                 </span>
                 <span className="hidden sm:inline-flex text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                  {totalPoolCount ? `Đề 20 câu / ${totalPoolCount} câu gốc` : 'Đề 20 câu ngẫu nhiên'}
+                  {totalPoolCount ? `Đề ${questions.length} câu / ${totalPoolCount} câu gốc` : `Đề ${questions.length} câu ngẫu nhiên`}
                 </span>
               </div>
               <p className="text-xs text-slate-400">
@@ -362,7 +362,7 @@ export const QuizScreen: React.FC<Props> = ({
             </div>
 
             {/* Questions Grid */}
-            <div className="grid grid-cols-5 gap-2 max-h-72 overflow-y-auto p-1">
+            <div className="grid grid-cols-5 sm:grid-cols-6 gap-2 max-h-80 overflow-y-auto p-1">
               {questions.map((q, idx) => {
                 const isAnswered = Boolean(selectedAnswers[q.id]);
                 const isFlagged = Boolean(flaggedQuestions[q.id]);

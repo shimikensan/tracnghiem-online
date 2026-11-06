@@ -58,7 +58,7 @@ export const WelcomeScreen: React.FC<Props> = ({
   onOpenFirebaseModal, 
   isFirebaseReady,
   totalPoolCount = 50,
-  examQuestionsCount = 20
+  examQuestionsCount = 30
 }) => {
   const [fullName, setFullName] = useState('');
   const [rank, setRank] = useState('');
@@ -408,7 +408,7 @@ export const WelcomeScreen: React.FC<Props> = ({
                   <Award className="w-4 h-4 text-amber-400" />
                   Hình thức câu hỏi:
                 </span>
-                <span className="font-semibold text-slate-200">Trắc nghiệm 3 đáp án (A, B, C)</span>
+                <span className="font-semibold text-slate-200">Trắc nghiệm 4 đáp án (A, B, C, D)</span>
               </div>
 
               <div className="flex items-center justify-between p-3 rounded-xl bg-slate-800/60 border border-slate-700/50">
@@ -416,14 +416,14 @@ export const WelcomeScreen: React.FC<Props> = ({
                   <CheckCircle className="w-4 h-4 text-teal-400" />
                   Tiêu chuẩn đạt yêu cầu:
                 </span>
-                <span className="font-bold text-emerald-400">≥ 70% (7.0 điểm)</span>
+                <span className="font-bold text-emerald-400">≥ 70% (≥ 7.0 điểm)</span>
               </div>
             </div>
 
             <div className="mt-4 p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-[11px] text-indigo-200 leading-relaxed flex items-start gap-2">
               <Sparkles className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
               <div>
-                <strong>Cơ chế bốc đề ngẫu nhiên:</strong> Mỗi lượt thi, hệ thống sẽ tự động <strong>chọn ngẫu nhiên 20 câu hỏi</strong> từ ngân hàng {totalPoolCount} câu hỏi, bảo đảm tính công bằng và độc lập cho từng thí sinh.
+                <strong>Cơ chế bốc đề ngẫu nhiên:</strong> Mỗi lượt thi, hệ thống sẽ tự động <strong>chọn ngẫu nhiên 30 câu hỏi</strong> từ ngân hàng {totalPoolCount} câu hỏi, bảo đảm tính công bằng và độc lập cho từng thí sinh.
               </div>
             </div>
 

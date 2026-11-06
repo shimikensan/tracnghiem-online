@@ -41,7 +41,7 @@ export default function App() {
   // Ngân hàng toàn bộ câu hỏi (tải từ Firestore hoặc mặc định 50 câu)
   const [allQuestions, setAllQuestions] = useState<Question[]>(UAV_QUESTIONS);
 
-  // Bộ 20 câu hỏi được chọn ngẫu nhiên cho lượt thi của thí sinh
+  // Bộ câu hỏi được chọn ngẫu nhiên cho lượt thi của thí sinh (30 câu)
   const [examQuestions, setExamQuestions] = useState<Question[]>(() => 
     selectRandomQuestions(UAV_QUESTIONS, EXAM_QUESTION_COUNT)
   );
@@ -76,14 +76,14 @@ export default function App() {
     loadDynamicQuestions();
   }, []);
 
-  // Bắt đầu làm bài thi từ Màn hình 1 (chọn ngẫu nhiên 20 câu hỏi)
+  // Bắt đầu làm bài thi từ Màn hình 1 (chọn ngẫu nhiên 30 câu hỏi)
   const handleStartExam = (candidateData: UserCandidate) => {
     setCandidate(candidateData);
     setUserAnswers({});
     setTimeSpentSeconds(0);
-    // BỐC NGẪU NHIÊN 20 CÂU HỎI TRONG TỔNG SỐ CÂU HỎI
-    const selected20 = selectRandomQuestions(allQuestions, EXAM_QUESTION_COUNT);
-    setExamQuestions(selected20);
+    // BỐC NGẪU NHIÊN 30 CÂU HỎI TRONG TỔNG SỐ CÂU HỎI
+    const selected = selectRandomQuestions(allQuestions, EXAM_QUESTION_COUNT);
+    setExamQuestions(selected);
     setScreen('quiz');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -99,12 +99,12 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Làm lại bài thi mới (sẽ bốc một bộ 20 câu hỏi ngẫu nhiên mới)
+  // Làm lại bài thi mới (sẽ bốc một bộ 30 câu hỏi ngẫu nhiên mới)
   const handleRetakeExam = () => {
     setUserAnswers({});
     setTimeSpentSeconds(0);
-    const fresh20 = selectRandomQuestions(allQuestions, EXAM_QUESTION_COUNT);
-    setExamQuestions(fresh20);
+    const freshQuestions = selectRandomQuestions(allQuestions, EXAM_QUESTION_COUNT);
+    setExamQuestions(freshQuestions);
     setScreen('welcome');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

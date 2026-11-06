@@ -36,7 +36,7 @@ export interface ExamResultRecord {
   correctCount: number; // số câu đúng
   wrongCount: number;   // số câu sai
   unansweredCount: number; // số câu chưa làm
-  totalQuestions: number;  // tổng số câu làm bài (20 câu)
+  totalQuestions: number;  // tổng số câu làm bài (30 câu)
   poolTotalQuestions?: number; // tổng số câu trong ngân hàng câu hỏi
   percentage: number;      // phần trăm
   timeSpentSeconds: number; // thời gian làm bài (giây)

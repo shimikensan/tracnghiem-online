@@ -315,7 +315,7 @@ export const ResultScreen: React.FC<Props> = ({
                 (Tương đương {score100}/100 điểm - Tỷ lệ đúng {percentage}%)
               </div>
               <div className="text-[11px] text-indigo-300/90 font-medium mt-1 flex items-center justify-center gap-1">
-                <span>🎯 Đề thi 20 câu hỏi chọn ngẫu nhiên {totalPoolCount ? `từ kho ${totalPoolCount} câu` : ''}</span>
+                <span>🎯 Đề thi {totalQuestions} câu hỏi chọn ngẫu nhiên {totalPoolCount ? `từ kho ${totalPoolCount} câu` : ''}</span>
               </div>
             </div>
 
@@ -528,7 +528,7 @@ export const ResultScreen: React.FC<Props> = ({
                       ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/30'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'
                   }`}
-                  title="Hiển thị tất cả 20 câu hỏi trong đề sát hạch"
+                  title={`Hiển thị tất cả ${totalQuestions} câu hỏi trong đề sát hạch`}
                 >
                   <Filter className="w-3.5 h-3.5 text-indigo-300" />
                   <span>Tất cả ({totalQuestions})</span>
@@ -553,7 +553,7 @@ export const ResultScreen: React.FC<Props> = ({
             {/* Question Quick-Jump Chips Bar */}
             <div className="pt-4">
               <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2.5 flex flex-wrap items-center justify-between gap-2">
-                <span>Điều hướng nhanh danh sách 20 câu trong đề:</span>
+                <span>Điều hướng nhanh danh sách {totalQuestions} câu trong đề:</span>
                 <span className="text-slate-500 font-normal text-[11px]">
                   🟢 Đúng ({correctCount}) &nbsp;|&nbsp; 🔴 Sai ({wrongCount}) &nbsp;|&nbsp; ⚪ Chưa làm ({unansweredCount})
                 </span>
@@ -628,7 +628,7 @@ export const ResultScreen: React.FC<Props> = ({
                     onClick={() => setReviewFilter('all')}
                     className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-lg shadow-indigo-600/30 cursor-pointer"
                   >
-                    Xem lại toàn bộ 20 câu hỏi &amp; lời giải thích
+                    Xem lại toàn bộ {totalQuestions} câu hỏi &amp; lời giải thích
                   </button>
                 </div>
               );
