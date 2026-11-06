@@ -7,9 +7,27 @@ import { GoogleGenAI } from '@google/genai';
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+
+// Phân tích tham số --port từ dòng lệnh (nếu có do dev server truyền vào) hoặc biến PORT
+const args = process.argv.slice(2);
+const portIndex = args.indexOf('--port');
+const cliPort = portIndex !== -1 && args[portIndex + 1] ? Number(args[portIndex + 1]) : null;
+const PORT = cliPort || (process.env.NODE_ENV === 'production' ? (Number(process.env.PORT) || 3000) : 3000);
+
+// Middleware xử lý CORS và JSON
+app.use((_req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 app.use(express.json());
+
+// Endpoint kiểm tra trạng thái máy chủ AI
+app.get(['/api/chat', '/api/chat/health'], (_req, res) => {
+  res.json({ status: 'ok', service: 'Gemini Chatbot API', model: 'gemini-3.8-flash' });
+});
 
 // Khởi tạo Google GenAI SDK (chỉ chạy ở phía máy chủ)
 const ai = new GoogleGenAI({
@@ -22,7 +40,7 @@ const ai = new GoogleGenAI({
 });
 
 // Endpoint Chatbot AI Hỏi/Đáp phục vụ người học
-app.post('/api/chat', async (req, res) => {
+app.post(['/api/chat', '/api/chat/'], async (req, res) => {
   try {
     const { messages, context } = req.body;
     if (!messages || !Array.isArray(messages)) {

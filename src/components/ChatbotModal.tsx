@@ -45,6 +45,7 @@ export const ChatbotModal: React.FC<Props> = ({ isOpen, onClose, initialQuestion
     }
   ]);
   const [inputText, setInputText] = useState('');
+  const [lastQuestion, setLastQuestion] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -75,6 +76,7 @@ export const ChatbotModal: React.FC<Props> = ({ isOpen, onClose, initialQuestion
     if (!text || isLoading) return;
 
     setErrorMessage(null);
+    setLastQuestion(text);
     const userMsg: Message = {
       id: `user-${Date.now()}`,
       role: 'user',
@@ -104,6 +106,9 @@ export const ChatbotModal: React.FC<Props> = ({ isOpen, onClose, initialQuestion
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
+        if (response.status === 404) {
+          throw new Error('Máy chủ AI đang đồng bộ khởi động. Đồng chí vui lòng bấm "Thử lại" để tiếp tục.');
+        }
         throw new Error(data.error || `Lỗi máy chủ (${response.status})`);
       }
 
@@ -121,6 +126,17 @@ export const ChatbotModal: React.FC<Props> = ({ isOpen, onClose, initialQuestion
       setErrorMessage(err.message || 'Không thể kết nối đến máy chủ AI. Vui lòng thử lại.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleRetry = () => {
+    if (lastQuestion) {
+      // Xóa tin nhắn lỗi cuối cùng của user để không bị lặp
+      const lastUserIdx = messages.map(m => m.role).lastIndexOf('user');
+      if (lastUserIdx !== -1) {
+        setMessages(messages.slice(0, lastUserIdx));
+      }
+      handleSendMessage(lastQuestion);
     }
   };
 
@@ -308,8 +324,8 @@ export const ChatbotModal: React.FC<Props> = ({ isOpen, onClose, initialQuestion
                 <span>{errorMessage}</span>
               </div>
               <button
-                onClick={() => handleSendMessage()}
-                className="px-2.5 py-1 rounded-lg bg-rose-900/60 hover:bg-rose-800 text-white font-medium shrink-0 transition"
+                onClick={handleRetry}
+                className="px-2.5 py-1 rounded-lg bg-rose-900/60 hover:bg-rose-800 text-white font-medium shrink-0 transition cursor-pointer"
               >
                 Thử lại
               </button>
