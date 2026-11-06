@@ -1,7 +1,7 @@
 import React from 'react';
 import { UserCandidate } from '../types/quiz';
 import { isFirebaseConfigured } from '../services/firebase';
-import { ShieldCheck, Database, Award, User, LayoutDashboard, Settings } from 'lucide-react';
+import { ShieldCheck, Database, Award, User, LayoutDashboard, Settings, Bot } from 'lucide-react';
 
 interface Props {
   candidate: UserCandidate | null;
@@ -9,6 +9,7 @@ interface Props {
   onToggleAdmin: () => void;
   onOpenFirebaseModal: () => void;
   onOpenHistoryModal: () => void;
+  onOpenChatbot: () => void;
 }
 
 export const Header: React.FC<Props> = ({
@@ -16,7 +17,8 @@ export const Header: React.FC<Props> = ({
   isAdminActive,
   onToggleAdmin,
   onOpenFirebaseModal,
-  onOpenHistoryModal
+  onOpenHistoryModal,
+  onOpenChatbot
 }) => {
   const isConfigured = isFirebaseConfigured();
 
@@ -58,6 +60,17 @@ export const Header: React.FC<Props> = ({
               </div>
             </div>
           )}
+
+          {/* Nút Hỏi/Đáp Chatbot AI phục vụ người học */}
+          <button
+            onClick={onOpenChatbot}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition shadow-sm text-sky-300 hover:text-white bg-sky-950/60 hover:bg-sky-900/80 border-sky-700/60 shadow-sky-950/20 cursor-pointer"
+            title="Trợ lý Gemini AI hỏi/đáp và giải thích câu hỏi ôn thi"
+          >
+            <Bot className="w-3.5 h-3.5 text-sky-400" />
+            <span>Hỏi/Đáp</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse hidden sm:inline-block" />
+          </button>
 
           {/* Admin Management button */}
           <button

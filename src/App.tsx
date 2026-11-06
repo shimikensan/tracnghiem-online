@@ -31,8 +31,9 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { AdminPasswordModal } from './components/AdminPasswordModal';
 import { FirebaseConfigModal } from './components/FirebaseConfigModal';
 import { HistoryModal } from './components/HistoryModal';
+import { ChatbotModal } from './components/ChatbotModal';
 import { isAdminAuthenticated, logoutAdmin } from './services/auth';
-import { Plane, LayoutDashboard } from 'lucide-react';
+import { Plane, LayoutDashboard, Bot } from 'lucide-react';
 
 export default function App() {
   // Trạng thái luồng màn hình: 'welcome' -> 'quiz' -> 'result' | 'admin'
@@ -55,10 +56,11 @@ export default function App() {
   // Thời gian làm bài thực tế (tính bằng giây)
   const [timeSpentSeconds, setTimeSpentSeconds] = useState<number>(0);
 
-  // Quản lý Modal Cấu hình Firebase & Modal Xem Lịch Sử Điểm Thi & Mật khẩu Admin
+  // Quản lý Modal Cấu hình Firebase & Modal Xem Lịch Sử Điểm Thi & Mật khẩu Admin & Chatbot AI
   const [isFirebaseModalOpen, setIsFirebaseModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [isAdminPasswordModalOpen, setIsAdminPasswordModalOpen] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
 
   // Tải toàn bộ câu hỏi từ Firestore khi khởi động
   const loadDynamicQuestions = async () => {
@@ -151,6 +153,7 @@ export default function App() {
         onToggleAdmin={handleToggleAdmin}
         onOpenFirebaseModal={() => setIsFirebaseModalOpen(true)}
         onOpenHistoryModal={() => setIsHistoryModalOpen(true)}
+        onOpenChatbot={() => setIsChatbotOpen(true)}
       />
 
       {/* Main Body Theo Trạng Thái Screen */}
@@ -215,6 +218,12 @@ export default function App() {
         onClose={() => setIsHistoryModalOpen(false)}
       />
 
+      {/* Modal Chatbot Gemini AI Hỏi/Đáp Phục Vụ Người Học */}
+      <ChatbotModal
+        isOpen={isChatbotOpen}
+        onClose={() => setIsChatbotOpen(false)}
+      />
+
       {/* Footer Chuyên Nghiệp */}
       <footer className="border-t border-slate-900 bg-slate-950/80 py-6 text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -225,8 +234,16 @@ export default function App() {
 
           <div className="flex items-center gap-4 text-slate-400">
             <button
+              onClick={() => setIsChatbotOpen(true)}
+              className="hover:text-sky-300 transition flex items-center gap-1 font-semibold text-sky-400 cursor-pointer"
+            >
+              <Bot className="w-3.5 h-3.5" />
+              <span>Hỏi/Đáp AI</span>
+            </button>
+            <span>•</span>
+            <button
               onClick={handleToggleAdmin}
-              className="hover:text-indigo-300 transition flex items-center gap-1 font-semibold text-indigo-400"
+              className="hover:text-indigo-300 transition flex items-center gap-1 font-semibold text-indigo-400 cursor-pointer"
             >
               <LayoutDashboard className="w-3.5 h-3.5" />
               <span>{screen === 'admin' ? 'Màn hình làm bài' : 'Trang quản trị (Admin)'}</span>
